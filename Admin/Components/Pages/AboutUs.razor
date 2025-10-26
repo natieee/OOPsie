@@ -1,0 +1,61 @@
+@page "/About"
+@layout Admin.Components.Layout.MainLayout
+<div class="about-container">
+    <h2 class="page-title">👥 About Us</h2>
+    <div class="about-description">
+        Welcome to our Water Station Online Appointment!
+    <p>
+        We are fully dedicated to serving you with high-quality water delivered to your home. Our objective is to keep you and your family hydrated with clean, healthy water while offering the convenience of home delivery. 
+        Customers can use the website to easily select the type and quantity of water they require, designate their preferred delivery time, and track their orders without having to visit the real shop. This website demonstrates our dedication to enhancing customer service, maintaining accessibility, and ensuring timely delivery of safe, high-quality drinking water.
+    </p>
+        Thank you for selecting us as your reliable water supply partner!
+    </div>
+</div>
+    <h2 class="page-title">👤 Members</h2>
+    
+</div>
+<style>
+.about-container {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 2rem;
+    text-align: center;
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    background-image: url('/images/water-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.page-title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: white;
+}
+
+.about-description {
+    background: rgba(255,255,255,0.95);
+    color: #063970;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    width: 70%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    text-align: justify;
+    transition: transform 0.2s;
+}
+
+.about-description p {
+    text-align: justify;
+    text-indent: 40px;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+</style>

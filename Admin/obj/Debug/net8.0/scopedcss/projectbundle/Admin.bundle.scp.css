@@ -1,0 +1,17 @@
+/* _content/Admin/Components/Layout/MainLayout.razor.rz.scp.css */
+@inherits LayoutComponentBase
+
+<div class="sidebar">
+    <h2>Admin Dashboard</h2>
+    <nav>
+        <ul>
+            <li><NavLink href="/home" Match="NavLinkMatch.All">🏠 Home</NavLink></li>
+            <li><NavLink href="/orders">📦 Orders</NavLink></li>
+            <li><NavLink href="/feedback">💬 Feedback</NavLink></li>
+        </ul>
+    </nav>
+</div>
+
+<main class="main-content">
+    @Body
+</main>
