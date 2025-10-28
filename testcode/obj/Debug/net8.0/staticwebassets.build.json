@@ -1,0 +1,77 @@
+{
+  "Version": 1,
+  "Hash": "Wngft2u77juMMNX/UFjmgqHO1iwEWc4gcWonLRS6I6U=",
+  "Source": "testcode",
+  "BasePath": "_content/testcode",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "testcode/wwwroot",
+      "Source": "testcode",
+      "ContentRoot": "/workspaces/OOPsie/testcode/wwwroot/",
+      "BasePath": "_content/testcode",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "/workspaces/OOPsie/testcode/obj/Debug/net8.0/scopedcss/bundle/testcode.styles.css",
+      "SourceId": "testcode",
+      "SourceType": "Computed",
+      "ContentRoot": "/workspaces/OOPsie/testcode/obj/Debug/net8.0/scopedcss/bundle/",
+      "BasePath": "_content/testcode",
+      "RelativePath": "testcode.styles.css",
+      "AssetKind": "All",
+      "AssetMode": "CurrentProject",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "ScopedCss",
+      "AssetTraitValue": "ApplicationBundle",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "/workspaces/OOPsie/testcode/obj/Debug/net8.0/scopedcss/bundle/testcode.styles.css"
+    },
+    {
+      "Identity": "/workspaces/OOPsie/testcode/obj/Debug/net8.0/scopedcss/projectbundle/testcode.bundle.scp.css",
+      "SourceId": "testcode",
+      "SourceType": "Computed",
+      "ContentRoot": "/workspaces/OOPsie/testcode/obj/Debug/net8.0/scopedcss/projectbundle/",
+      "BasePath": "_content/testcode",
+      "RelativePath": "testcode.bundle.scp.css",
+      "AssetKind": "All",
+      "AssetMode": "Reference",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "ScopedCss",
+      "AssetTraitValue": "ProjectBundle",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "/workspaces/OOPsie/testcode/obj/Debug/net8.0/scopedcss/projectbundle/testcode.bundle.scp.css"
+    },
+    {
+      "Identity": "/workspaces/OOPsie/testcode/wwwroot/app.css",
+      "SourceId": "testcode",
+      "SourceType": "Discovered",
+      "ContentRoot": "/workspaces/OOPsie/testcode/wwwroot/",
+      "BasePath": "_content/testcode",
+      "RelativePath": "app.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/app.css"
+    }
+  ]
+}

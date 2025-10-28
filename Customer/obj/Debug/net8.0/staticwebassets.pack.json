@@ -1,0 +1,29 @@
+{
+  "Files": [
+    {
+      "Id": "/workspaces/OOPsie/Customer/obj/Debug/net8.0/scopedcss/projectbundle/Customer.bundle.scp.css",
+      "PackagePath": "staticwebassets/Customer.bundle.scp.css"
+    },
+    {
+      "Id": "/workspaces/OOPsie/Customer/wwwroot/app.css",
+      "PackagePath": "staticwebassets/app.css"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.Customer.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.build.Customer.props",
+      "PackagePath": "build\\Customer.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.Customer.props",
+      "PackagePath": "buildMultiTargeting\\Customer.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.Customer.props",
+      "PackagePath": "buildTransitive\\Customer.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

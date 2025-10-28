@@ -1,0 +1,256 @@
+﻿@page "/"
+@page "/home"
+@layout testcode.Components.Layout.MainLayout
+
+<h3>Place Your Order</h3>
+
+@if (currentStep == 1)
+{
+    <div class="form-section">
+        <h4>Do you have a gallon?</h4>
+        <div class="form-group">
+            <label>
+                <input type="radio" name="hasGallon" value="true" 
+                       @onchange="@((e) => { hasGallon = true; StateHasChanged(); })" />
+                Yes
+            </label>
+            <label>
+                <input type="radio" name="hasGallon" value="false" 
+                       @onchange="@((e) => { hasGallon = false; StateHasChanged(); })" />
+                No
+            </label>
+        </div>
+        <button class="btn btn-primary" @onclick="GoToNextStep" disabled="@(!hasGallon.HasValue)">Confirm</button>
+        
+        <!-- Debug info -->
+        <div style="color: red; margin-top: 10px;">
+            Debug: hasGallon = @hasGallon, hasValue = @hasGallon.HasValue
+        </div>
+    </div>
+}
+else if (currentStep == 2)
+{
+    <div class="form-section">
+        <h4>Do you want to purchase a gallon?</h4>
+        <div class="form-group">
+            <label>
+                <input type="radio" name="purchaseGallon" value="true" 
+                       @onchange="@((e) => { purchaseGallon = true; StateHasChanged(); })" />
+                Yes
+            </label>
+            <label>
+                <input type="radio" name="purchaseGallon" value="false" 
+                       @onchange="@((e) => { purchaseGallon = false; StateHasChanged(); })" />
+                No
+            </label>
+        </div>
+        <button class="btn btn-primary" @onclick="GoToNextStep" disabled="@(!purchaseGallon.HasValue)">Confirm</button>
+    </div>
+}
+else if (currentStep == 3)
+{
+    <div class="form-section">
+        <h4>Purchase Gallon</h4>
+        <div class="form-group">
+            <label for="purchaseQuantity">Quantity:</label>
+            <input type="number" id="purchaseQuantity" @bind="purchaseQuantity" @oninput="CalculatePurchaseTotal" class="form-control" min="1" />
+        </div>
+        <div class="form-group">
+            <label for="purchaseGallonType">Gallon Type:</label>
+            <select id="purchaseGallonType" @onchange="OnPurchaseGallonTypeChanged" class="form-control">
+                <option value="">Select Type</option>
+                <option value="slim">Slim Gallon (200 pesos)</option>
+                <option value="round">Round Gallon (250 pesos)</option>
+            </select>
+        </div>
+        @if (purchaseTotalPrice > 0)
+        {
+            <div class="total-price">
+                <strong>Total Price: @purchaseTotalPrice pesos</strong>
+            </div>
+        }
+        <button class="btn btn-primary" @onclick="ConfirmGallonPurchase" disabled="@(purchaseQuantity <= 0 || string.IsNullOrEmpty(purchaseGallonType))">Confirm Purchase</button>
+    </div>
+}
+else if (currentStep == 4)
+{
+    <div class="order-form">
+        <h4>Order Details</h4>
+        
+        <div class="form-group">
+            <label for="customerName">Customer Name (name on gallon):</label>
+            <input type="text" id="customerName" @bind="customerName" class="form-control" />
+        </div>
+        
+        <div class="form-group">
+            <label for="gallonType">Type of Gallon:</label>
+            <select id="gallonType" @onchange="OnGallonTypeChanged" class="form-control">
+                <option value="">Select Type</option>
+                <option value="slim">Slim Gallon (25 pesos)</option>
+                <option value="round">Round Gallon (30 pesos)</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" @bind="quantity" @oninput="CalculateTotal" class="form-control" min="1" />
+        </div>
+        
+        @if (totalPrice > 0)
+        {
+            <div class="total-price">
+                <strong>Total Price: @totalPrice pesos</strong>
+            </div>
+        }
+        
+        <div class="form-group">
+            <label for="paymentMethod">Payment Method:</label>
+            <select id="paymentMethod" @bind="paymentMethod" class="form-control">
+                <option value="">Select Payment Method</option>
+                <option value="cash">Cash</option>
+                <option value="card">Credit/Debit Card</option>
+                <option value="gcash">GCash</option>
+                <option value="maya">Maya</option>
+            </select>
+        </div>
+        
+        <button class="btn btn-success" @onclick="PlaceOrder" disabled="@(!IsFormValid())">Place Order</button>
+    </div>
+}
+else if (currentStep == 5)
+{
+    <div class="order-placed">
+        <div class="alert alert-success">
+            <h4>Order Placed Successfully!</h4>
+            <p>Please wait 10-15 minutes for the gallon pickup at your provided address.</p>
+            <p>Check the order history page for your order status.</p>
+        </div>
+    </div>
+}
+
+@code {
+    private int currentStep = 1;
+    private bool? hasGallon = null;
+    private bool? purchaseGallon = null;
+    
+    // Gallon purchase fields
+    private int purchaseQuantity = 0;
+    private string purchaseGallonType = "";
+    private int purchaseTotalPrice = 0;
+    
+    // Main order fields
+    private string customerName = "";
+    private string gallonType = "";
+    private int quantity = 0;
+    private int totalPrice = 0;
+    private string paymentMethod = "";
+
+    private void GoToNextStep()
+    {
+        if (currentStep == 1)
+        {
+            // Step 1: Has gallon?
+            if (hasGallon.HasValue)
+            {
+                if (hasGallon.Value)
+                {
+                    // Has gallon, ask if they want to purchase another
+                    currentStep = 2;
+                }
+                else
+                {
+                    // No gallon, go directly to purchase gallon
+                    currentStep = 3;
+                }
+            }
+        }
+        else if (currentStep == 2)
+        {
+            // Step 2: Want to purchase gallon?
+            if (purchaseGallon.HasValue)
+            {
+                if (purchaseGallon.Value)
+                {
+                    // Want to purchase gallon
+                    currentStep = 3;
+                }
+                else
+                {
+                    // Don't want to purchase, go to main order
+                    currentStep = 4;
+                }
+            }
+        }
+        StateHasChanged();
+    }
+
+    private void OnPurchaseGallonTypeChanged(ChangeEventArgs e)
+    {
+        purchaseGallonType = e.Value?.ToString() ?? "";
+        CalculatePurchaseTotal();
+        StateHasChanged();
+    }
+
+    private void OnGallonTypeChanged(ChangeEventArgs e)
+    {
+        gallonType = e.Value?.ToString() ?? "";
+        CalculateTotal();
+        StateHasChanged();
+    }
+    
+    private void ConfirmGallonPurchase()
+    {
+        if (!hasGallon.Value)
+        {
+            // If they didn't have a gallon and purchased one, complete order
+            currentStep = 5;
+        }
+        else
+        {
+            // If they had a gallon and purchased another, go to main order
+            currentStep = 4;
+        }
+        StateHasChanged();
+    }
+    
+    private void CalculatePurchaseTotal()
+    {
+        if (purchaseQuantity > 0 && !string.IsNullOrEmpty(purchaseGallonType))
+        {
+            purchaseTotalPrice = purchaseGallonType == "slim" ? purchaseQuantity * 200 : purchaseQuantity * 250;
+        }
+        else
+        {
+            purchaseTotalPrice = 0;
+        }
+    }
+    
+    private void CalculateTotal()
+    {
+        if (quantity > 0 && !string.IsNullOrEmpty(gallonType))
+        {
+            totalPrice = gallonType == "slim" ? quantity * 25 : quantity * 30;
+        }
+        else
+        {
+            totalPrice = 0;
+        }
+    }
+    
+    private bool IsFormValid()
+    {
+        return !string.IsNullOrEmpty(customerName) &&
+               !string.IsNullOrEmpty(gallonType) &&
+               quantity > 0 &&
+               !string.IsNullOrEmpty(paymentMethod);
+    }
+    
+    private void PlaceOrder()
+    {
+        if (IsFormValid())
+        {
+            currentStep = 5;
+            StateHasChanged();
+        }
+    }
+}

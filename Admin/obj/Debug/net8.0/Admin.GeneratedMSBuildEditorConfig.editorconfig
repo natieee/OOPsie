@@ -42,8 +42,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9PcmRlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/workspaces/OOPsie/Admin/Components/Pages/OrderCustomer.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9PcmRlckN1c3RvbWVyLnJhem9y
+[/workspaces/OOPsie/Admin/Components/Pages/OrderHistory.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9PcmRlckhpc3RvcnkucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/workspaces/OOPsie/Admin/Components/Routes.razor]

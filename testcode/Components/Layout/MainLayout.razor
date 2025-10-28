@@ -1,0 +1,42 @@
+﻿@inherits LayoutComponentBase
+
+<div class="dashboard-layout">
+    <aside class="sidebar">
+        <h2 class="logo">💧 Water Station Online Appointment</h2>
+        <nav>
+            <a href="/home" class="nav-link @(IsActive("/home") ? "active" : "")">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <a href="/orders" class="nav-link @(IsActive("/orders") ? "active" : "")">
+                <i class="fas fa-box"></i> Orders
+            </a>
+            <a href="/order-history" class="nav-link @(IsActive("/order-history") ? "active" : "")">
+                <i class="fas fa-history"></i> Order History
+            </a>
+            <a href="/feedback" class="nav-link @(IsActive("/feedback") ? "active" : "")">
+                <i class="fas fa-star"></i> Feedback
+            </a>
+            <a href="/About" class="nav-link @(IsActive("/About") ? "active" : "")">
+                <i class="fas fa-info-circle"></i> About Us
+            </a>           
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="background-overlay"></div>
+        <div class="page-container">
+            @Body
+        </div>
+    </main>
+</div>
+
+@code {
+    private bool IsActive(string href)
+    {
+        var uri = NavigationManager.Uri.Replace(NavigationManager.BaseUri, "/");
+        return uri.StartsWith(href, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Inject] private NavigationManager NavigationManager { get; set; } = default!;
+}
+

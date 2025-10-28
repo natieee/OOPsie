@@ -10,7 +10,6 @@ UserCustomer *-- Feedback
 PlaceOrder o-- Feedback
 Admin -- Feedback
 
-
 class Admin
 {
     #string adminID
