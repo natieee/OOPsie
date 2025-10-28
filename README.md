@@ -66,18 +66,18 @@ With a simple, interactive web interface, this application uses Entity Framework
 ### Customer POV
 1. Open the **Home** page to see what the site has to offer
 2. Open the **Place Order** page to place an order
-2a. **Select** your answer on the questions asking if you have a gallon and if you want to purchase one
-2b. Choose the **type of gallon** and enter the **quantity** you want to **purchase**
-2c. Write the **customer name** that you want to put in the gallon
-2d. Choose the **type of gallon** and enter the **quantity** you want to **refill**
-2e. Select the **payment method** by clicking the drop-down button
-2f. Click the **"Place Order"** button to place the order
+- **Select** your answer on the questions asking if you have a gallon and if you want to purchase one
+- Choose the **type of gallon** and enter the **quantity** you want to **purchase**
+- Write the **customer name** that you want to put in the gallon
+- Choose the **type of gallon** and enter the **quantity** you want to **refill**
+- Select the **payment method** by clicking the drop-down button
+- Click the **"Place Order"** button to place the order
 3. Open the **Order History** page to see your order status and history
 4. Open the **Feedback** page to view other people's feedback as well as to write your own
-4a. Enter your **feedback** about the product/service
-4b. Choose if you want to make your name **hidden** for other users or not
-4c. Select the **ratings** that you'll give to the system and company
-4d. Click the **Submit Feedback** button to post your comment
+- Enter your **feedback** about the product/service
+- Choose if you want to make your name **hidden** for other users or not
+- Select the **ratings** that you'll give to the system and company
+- Click the **Submit Feedback** button to post your comment
 5. Open the **About Us** page to view information about the page
 
 
