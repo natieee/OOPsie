@@ -1,0 +1,276 @@
+﻿@page "/"
+@page "/login"
+@inject NavigationManager Navigation
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+        background: url('https://learnandsupport.getolympus.com/sites/default/files/styles/hero_large/public/2020-10/amico_-_water_droplets_1.jpg?itok=kJ972xkJ') no-repeat center center fixed;
+        background-size: cover;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .login-container {
+        display: flex;
+        max-width: 1000px;
+        width: 100%;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        border-radius: 15px;
+        overflow: hidden;
+        margin: auto; /* Added for extra centering */
+    }
+
+    /* The rest of your CSS remains the same */
+    .brand-section {
+        flex: 1;
+        background: linear-gradient(135deg, rgba(6, 57, 112, 0.9), rgba(4, 33, 74, 0.9));
+        color: white;
+        padding: 60px 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .brand-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('https://learnandsupport.getolympus.com/sites/default/files/styles/hero_large/public/2020-10/amico_-_water_droplets_1.jpg?itok=kJ972xkJ') no-repeat center center;
+        background-size: cover;
+        opacity: 0.15;
+        z-index: 0;
+    }
+
+    .brand-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .brand-logo {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 30px;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 10px 15px;
+        border-radius: 5px;
+        display: inline-block;
+        width: fit-content;
+    }
+
+    .brand-title {
+        font-size: 32px;
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 10px;
+    }
+
+    .brand-subtitle {
+        font-size: 16px;
+        opacity: 0.9;
+        margin-top: 10px;
+        font-style: italic;
+    }
+
+    .form-section {
+        flex: 1;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 60px 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .form-header {
+        margin-bottom: 30px;
+    }
+
+    .form-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: #04214a;
+        margin-bottom: 5px;
+    }
+
+    .form-subtitle {
+        color: #666;
+        font-size: 14px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #333;
+        font-size: 14px;
+    }
+
+    .form-input, .form-select {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #e1e5e9;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: border-color 0.3s;
+    }
+
+    .form-input:focus, .form-select:focus {
+        outline: none;
+        border-color: #063970;
+    }
+
+    .forgot-password {
+        text-align: right;
+        margin-top: -10px;
+        margin-bottom: 20px;
+    }
+
+    .forgot-password a {
+        color: #063970;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .forgot-password a:hover {
+        text-decoration: underline;
+    }
+
+    .login-btn {
+        width: 100%;
+        padding: 14px;
+        background: #063970;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.3s;
+        margin-top: 10px;
+    }
+
+    .login-btn:hover {
+        background: #04214a;
+    }
+
+    .switch-link {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 14px;
+    }
+
+    .switch-link a {
+        color: #063970;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .switch-link a:hover {
+        text-decoration: underline;
+    }
+
+    @@media (max-width: 768px) {
+        .login-container {
+            flex-direction: column;
+        }
+        
+        .brand-section {
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .form-section {
+            padding: 40px 20px;
+        }
+    }
+</style>
+
+<div class="login-container">
+    <!-- Left Brand Section -->
+    <div class="brand-section">
+        <div class="brand-content">
+            <div class="brand-logo">Logo</div>
+            <div class="brand-title">
+                Water Station<br />
+                Online Appointment
+            </div>
+            <div class="brand-subtitle">DRINK YOUR WATER BITCH!</div>
+        </div>
+    </div>
+
+    <!-- Right Form Section -->
+    <div class="form-section">
+        <div class="form-header">
+            <h2 class="form-title">Login</h2>
+            <div class="form-subtitle">Access your account</div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Log in as</label>
+            <select class="form-select" @bind="SelectedRole">
+                <option value="Customer">Customer</option>
+                <option value="Admin">Admin</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Username</label>
+            <input class="form-input" type="text" @bind="Username" placeholder="Enter your username" />
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Password</label>
+            <input class="form-input" type="password" @bind="Password" placeholder="Enter your password" />
+        </div>
+
+        <div class="forgot-password">
+            <a href="#" @onclick="HandleForgotPassword">Forgot password?</a>
+        </div>
+
+        <button class="login-btn" @onclick="HandleLogin">Login</button>
+
+        <div class="switch-link">
+            Don't have an account? <a href="/signup">Create account</a>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string SelectedRole { get; set; } = "Customer";
+    private string Username { get; set; } = "";
+    private string Password { get; set; } = "";
+
+    private void HandleLogin()
+    {
+        // TODO: Implement login logic
+        Console.WriteLine($"Login attempt: {SelectedRole}, {Username}");
+        // Navigation.NavigateTo("/dashboard");
+    }
+
+    private void HandleForgotPassword()
+    {
+        // TODO: Implement forgot password logic
+        Console.WriteLine("Forgot password clicked");
+        // Navigation.NavigateTo("/forgot-password");
+    }
+}

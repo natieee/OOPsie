@@ -1,0 +1,87 @@
+@startuml
+UserCustomer *-- PlaceOrder 
+PlaceOrder --> Gallon
+Gallon <|-- SlimGallon
+Gallon <|-- RoundGallon 
+PlaceOrder --> Payment
+Payment <|-- CashPayment
+Payment <|-- EWalletPayment
+UserCustomer *-- Feedback
+PlaceOrder o-- Feedback
+Admin -- Feedback
+
+
+class Admin
+{
+    #string adminID
+    -string username
+    -string password
+    +void login(string u, string p)
+    +void manageUsers()
+    +void manageOrders()
+    +void replyFeedback(string f, string r)
+    +void dailyReport()
+}
+class UserCustomer
+{
+    #string customerID
+    -string username
+    -string password
+    -string error
+    +boolean login(string u, string p)
+    +void signup(string n, string u, string p, int c, string a)
+    +void editAccount(string newname, string newuser, string newpass, int newcontact, string newaddress)
+    +void viewAccount()
+    +void deleteAccount()
+    +void viewOrderHistory()
+}
+class PlaceOrder
+{
+    -string gallontype
+    -int quantity
+    -string paymentmethod
+    -string gallonpickup
+    -string ordergallon
+    +void orderStatus()
+    +void createOrder(string n, string g, int q, string a)
+    +void updateOrderStatus(string os)
+    +string getOrderDetails()
+    +double calculateTotal()
+}
+class Feedback
+{
+    -string comments
+    -int rating
+    +void submitFeedback(string u, string c, int r)
+    +void viewFeedback()
+}
+abstract class Gallon
+{
+    #double price
+    +double calculateTotal(int quantity)
+}
+class SlimGallon
+{
+    +double calculateTotal(int quantity)
+}
+class RoundGallon
+{
+    +double calculateTotal(int quantity)
+}
+interface Payment
+{
+    +choosePaymentMethod(string method)
+}
+class CashPayment
+{
+    +boolean processPayment(double amount)
+}
+class EWalletPayment
+{
+    #string accountID
+    -string ewalletType
+    +boolean processPayment(double amount)
+}
+@enduml
+
+

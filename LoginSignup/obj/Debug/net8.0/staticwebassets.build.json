@@ -1,0 +1,77 @@
+{
+  "Version": 1,
+  "Hash": "TlgxgMH6tI1+iU21IugOFoEBh0tiOXGCKNPQukjqB5M=",
+  "Source": "LoginSignup",
+  "BasePath": "_content/LoginSignup",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "LoginSignup/wwwroot",
+      "Source": "LoginSignup",
+      "ContentRoot": "/workspaces/OOPsie/LoginSignup/wwwroot/",
+      "BasePath": "_content/LoginSignup",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "/workspaces/OOPsie/LoginSignup/obj/Debug/net8.0/scopedcss/bundle/LoginSignup.styles.css",
+      "SourceId": "LoginSignup",
+      "SourceType": "Computed",
+      "ContentRoot": "/workspaces/OOPsie/LoginSignup/obj/Debug/net8.0/scopedcss/bundle/",
+      "BasePath": "_content/LoginSignup",
+      "RelativePath": "LoginSignup.styles.css",
+      "AssetKind": "All",
+      "AssetMode": "CurrentProject",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "ScopedCss",
+      "AssetTraitValue": "ApplicationBundle",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "/workspaces/OOPsie/LoginSignup/obj/Debug/net8.0/scopedcss/bundle/LoginSignup.styles.css"
+    },
+    {
+      "Identity": "/workspaces/OOPsie/LoginSignup/obj/Debug/net8.0/scopedcss/projectbundle/LoginSignup.bundle.scp.css",
+      "SourceId": "LoginSignup",
+      "SourceType": "Computed",
+      "ContentRoot": "/workspaces/OOPsie/LoginSignup/obj/Debug/net8.0/scopedcss/projectbundle/",
+      "BasePath": "_content/LoginSignup",
+      "RelativePath": "LoginSignup.bundle.scp.css",
+      "AssetKind": "All",
+      "AssetMode": "Reference",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "ScopedCss",
+      "AssetTraitValue": "ProjectBundle",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "/workspaces/OOPsie/LoginSignup/obj/Debug/net8.0/scopedcss/projectbundle/LoginSignup.bundle.scp.css"
+    },
+    {
+      "Identity": "/workspaces/OOPsie/LoginSignup/wwwroot/app.css",
+      "SourceId": "LoginSignup",
+      "SourceType": "Discovered",
+      "ContentRoot": "/workspaces/OOPsie/LoginSignup/wwwroot/",
+      "BasePath": "_content/LoginSignup",
+      "RelativePath": "app.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/app.css"
+    }
+  ]
+}
