@@ -1,3 +1,9 @@
+<p align="center">
+<img src="https://i.postimg.cc/tJjFPpFj/566713130-2648065195543491-8938382609362833392-n.png">
+</p>
+
+----
+
 # WSOA - Water Station Online Appointment
 
 A simple application built with **ASP.NET Core Blazor Server** used for online transactions of water refill servicers.
@@ -132,7 +138,166 @@ OOPsie/
 └── OOPsie.csproj                         # Project file
 ```
 
-## 🚨 Important Links
-1. Figma - https://www.figma.com/design/qDKawO6WHZ6pZayIyJRWcE/Wireframing-WSOA?node-id=0-1&t=2q8IbWdNnUfIcZg5-1
-2. UML - /workspaces/OOPsie/UML.puml OR https://drive.google.com/file/d/1J8QeOCYmqnLIjpQS3NhUWjs6BF_PW3Lr/view?usp=sharing
+## Codes
+### Admin POV
+#### Home
+```C#
+@code {
+    private string quote = string.Empty;
+    private readonly string[] quotes =
+    {
+        "Every drop counts — keep pushing forward!",
+        "Success flows like water — steady and unstoppable.",
+        "Stay consistent, even when progress feels slow.",
+        "Hard work beats talent when talent doesn't work hard.",
+        "Be patient. Great results take time and persistence.",
+        "Each small effort adds up to something big.",
+        "You are not tired, you are just one step away from greatness."
+    };
 
+    protected override void OnInitialized()
+    {
+        var rand = new Random();
+        quote = quotes[rand.Next(quotes.Length)];
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("renderSalesChart");
+        }
+    }
+}
+```
+Selects a random motivational quote and renders the sales chart
+####  Order
+```C#
+@code {
+    private List<OrderModel> orders = new();
+    private List<OrderModel> filteredOrders = new();
+    private bool showSearchPanel = false;
+    private string searchName = "";
+    private DateTime? searchDate;
+    private string searchPaymentStatus = "";
+    private bool groupByDay = false;
+
+    protected override void OnInitialized()
+    {
+        // Sample data with dates, payment status, amounts, and addresses
+        orders = new List<OrderModel>
+        {
+            new() { Id = "ORD-006", Customer = "Anna Cruz", Address = "123 Main St, Manila", Status = "Pending", 
+                   PaymentStatus = "Pending", Amount = 125.50m,
+                   OrderDate = DateTime.Today.AddHours(10).AddMinutes(30) },
+            new() { Id = "ORD-005", Customer = "Marco Diaz", Address = "456 Oak Ave, Quezon City", Status = "Picked Up", 
+                   PaymentStatus = "Successful", Amount = 89.99m,
+                   OrderDate = DateTime.Today.AddHours(14).AddMinutes(15) },
+            new() { Id = "ORD-004", Customer = "Jessa Flores", Address = "789 Pine St, Makati", Status = "Delivered", 
+                   PaymentStatus = "Successful", Amount = 215.75m,
+                   OrderDate = DateTime.Today.AddDays(-1).AddHours(9).AddMinutes(45) },
+            new() { Id = "ORD-003", Customer = "Carlos Reyes", Address = "321 Elm St, Taguig", Status = "Pending", 
+                   PaymentStatus = "Failed", Amount = 45.25m,
+                   OrderDate = DateTime.Today.AddDays(-1).AddHours(16).AddMinutes(20) },
+            new() { Id = "ORD-002", Customer = "Maria Santos", Address = "654 Maple Dr, Pasig", Status = "Picked Up", 
+                   PaymentStatus = "Refunded", Amount = 150.00m,
+                   OrderDate = DateTime.Today.AddHours(11).AddMinutes(0) },
+            new() { Id = "ORD-001", Customer = "John Smith", Address = "987 Cedar Ln, Mandaluyong", Status = "Delivered", 
+                   PaymentStatus = "Successful", Amount = 299.99m,
+                   OrderDate = DateTime.Today.AddDays(-2).AddHours(13).AddMinutes(30) }
+        };
+        
+        filteredOrders = orders;
+    }
+
+    private void ToggleSearchPanel()
+    {
+        showSearchPanel = !showSearchPanel;
+    }
+
+    private void ApplyFilters()
+    {
+        filteredOrders = orders.Where(order =>
+            (string.IsNullOrEmpty(searchName) || 
+             order.Customer.Contains(searchName, StringComparison.OrdinalIgnoreCase)) &&
+            (!searchDate.HasValue || 
+             order.OrderDate.Date == searchDate.Value.Date) &&
+            (string.IsNullOrEmpty(searchPaymentStatus) || 
+             order.PaymentStatus == searchPaymentStatus)
+        ).ToList();
+        
+        StateHasChanged(); // Refresh UI after filtering
+    }
+
+    private void ClearFilters()
+    {
+        searchName = "";
+        searchDate = null;
+        searchPaymentStatus = "";
+        groupByDay = false;
+        filteredOrders = orders;
+        StateHasChanged(); // Refresh UI after clearing filters
+    }
+
+    private void OnOrderStatusChange(OrderModel order, ChangeEventArgs e)
+    {
+        order.Status = e.Value?.ToString() ?? "Pending";
+        StateHasChanged(); // Force UI refresh to update colors
+        
+        Console.WriteLine($"Order {order.Id} status changed to: {order.Status}");
+    }
+
+    private void OnPaymentStatusChange(OrderModel order, ChangeEventArgs e)
+    {
+        order.PaymentStatus = e.Value?.ToString() ?? "Pending";
+        StateHasChanged(); // Force UI refresh to update colors
+        
+        Console.WriteLine($"Order {order.Id} payment status changed to: {order.PaymentStatus}");
+    }
+
+    private string GetOrderStatusClass(string orderStatus)
+    {
+        return orderStatus?.ToLower() switch
+        {
+            "pending" => "order-pending",
+            "picked up" => "order-picked-up",
+            "delivered" => "order-delivered",
+            "cancelled" => "order-cancelled",
+            _ => "order-pending"
+        };
+    }
+
+    private string GetPaymentStatusClass(string paymentStatus)
+    {
+        return paymentStatus?.ToLower() switch
+        {
+            "pending" => "payment-pending",
+            "successful" => "payment-successful",
+            "failed" => "payment-failed",
+            "refunded" => "payment-refunded",
+            _ => "payment-pending"
+        };
+    }
+
+    public class OrderModel
+    {
+        public string Id { get; set; } = string.Empty;
+        public string Customer { get; set; } = string.Empty;
+        public string Address { get; set; } = string.Empty;
+        public string Status { get; set; } = string.Empty;
+        public string PaymentStatus { get; set; } = string.Empty;
+        public decimal Amount { get; set; }  // Use decimal for currency
+        public DateTime OrderDate { get; set; }  // Changed from DateTime? to DateTime
+    }
+}
+```
+### Customer POV
+#### Home
+```C#
+```
+### Login/Signup Pages
+
+## 🚨 Important Links
+1. Figma - [Figma](https://www.figma.com/design/qDKawO6WHZ6pZayIyJRWcE/Wireframing-WSOA?node-id=0-1&t=2q8IbWdNnUfIcZg5-1)
+2. UML - [Relative Link](/UML.puml) OR [Google Drive](https://drive.google.com/file/d/1J8QeOCYmqnLIjpQS3NhUWjs6BF_PW3Lr/view?usp=sharing)
+3. Logo - [Google Drive](https://drive.google.com/file/d/1Zp4fHttLC4M-Rqi34LmliEfKzrQ4-Np3/view)
