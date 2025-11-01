@@ -170,7 +170,7 @@ OOPsie/
     }
 }
 ```
-Selects a random motivational quote and renders the sales chart
+This component selects a random motivational quote and renders the sales chart.
 ####  Order
 ```C#
 @code {
@@ -291,12 +291,225 @@ Selects a random motivational quote and renders the sales chart
     }
 }
 ```
+This component allows the admin to view the orders made, filter them by date, payment status, or customer name, and update the status of the order and payment.
+#### Order History
+```C#
+@code {
+    private List<OrderModel> orders = new();
+
+    protected override void OnInitialized()
+    {
+        orders = new List<OrderModel>
+        {
+            new() {
+                Id = "ORD-001",
+                Customer = "Anna Cruz",
+                Items = "2x Round Gallons",
+                Total = 240.00m,
+                Status = "Delivered",
+                OutForDelivery = new DateTime(2025, 9, 30, 9, 15, 0),
+            },
+            new() {
+                Id = "ORD-002",
+                Customer = "Marco Diaz",
+                Items = "1x Slim Gallon",
+                Total = 120.00m,
+                Status = "Processing",
+                OutForDelivery = new DateTime(2025, 10, 2, 11, 30, 0),
+            },
+            new() {
+                Id = "ORD-003",
+                Customer = "Jessa Flores",
+                Items = "3x Round Gallons",
+                Total = 360.00m,
+                Status = "Pending"
+            }
+        };
+
+        // Auto-calculate delivered time (+1 hour)
+        foreach (var o in orders)
+        {
+            if (o.Status == "Delivered" && o.OutForDelivery.HasValue)
+                o.TimeDelivered = o.OutForDelivery.Value.AddHours(1);
+        }
+
+        // Sort newest first
+        orders = orders.OrderByDescending(o => o.OutForDelivery ?? o.TimeDelivered ?? DateTime.MinValue).ToList();
+    }
+
+    private string GetStatusClass(string status) => status switch
+    {
+        "Delivered" => "status-delivered",
+        "Processing" => "status-processing",
+        "Pending" => "status-pending",
+        _ => ""
+    };
+
+    public class OrderModel
+    {
+        public string Id { get; set; } = "";
+        public string Customer { get; set; } = "";
+        public string Items { get; set; } = "";
+        public decimal Total { get; set; }
+        public string Status { get; set; } = "";
+        public DateTime? OutForDelivery { get; set; }
+        public DateTime? TimeDelivered { get; set; }
+    }
+}
+```
+This Component allows the admin to see the history of orders made by customers.
+#### Feedback
+```C#
+@code {
+    private int selectedStar = 0;
+
+    private class Review
+    {
+        public string Author { get; set; } = "";
+        public string Comment { get; set; } = "";
+        public int Star { get; set; }
+    }
+
+    private List<Review> allReviews = new()
+    {
+        new Review { Author = "Anna", Comment = "Amazing water delivery! Always on time!", Star = 5 },
+        new Review { Author = "Mark", Comment = "Fantastic service and clean water!", Star = 5 },
+        new Review { Author = "Ella", Comment = "Very good experience!", Star = 4 },
+        new Review { Author = "Tom", Comment = "Delivery was okay, packaging could improve.", Star = 3 },
+        new Review { Author = "Cathy", Comment = "Not bad but delivery was a bit late.", Star = 3 },
+        new Review { Author = "Rico", Comment = "The bottle was slightly damaged.", Star = 2 },
+        new Review { Author = "Marie", Comment = "Terrible experience, never again.", Star = 1 },
+    };
+
+    private List<Review> filteredReviews = new();
+
+    private string newComment = "";
+    private int newStar = 0;
+    private bool isAnonymous = false;
+
+    protected override void OnInitialized()
+    {
+        filteredReviews = new(allReviews);
+    }
+
+    private void FilterReviews(int star)
+    {
+        selectedStar = star;
+
+        if (star == 0)
+            filteredReviews = new(allReviews);
+        else
+            filteredReviews = allReviews.Where(r => r.Star == star).ToList();
+
+        StateHasChanged();
+    }
+
+    private void SubmitFeedback()
+    {
+        if (!string.IsNullOrWhiteSpace(newComment))
+        {
+            string author = isAnonymous ? "Anonymous" : "Username";
+            allReviews.Add(new Review { Author = author, Comment = newComment, Star = newStar });
+            newComment = "";
+            newStar = 0;
+            isAnonymous = false;
+            FilterReviews(selectedStar);
+        }
+    }
+}
+```
+
 ### Customer POV
 #### Home
 ```C#
-```
-### Login/Signup Pages
 
+```
+
+#### Order Placement
+```C#
+@code {
+    private bool hasGallon = true;
+    private bool purchaseGallon = false;
+    private int purchaseQuantity;
+    private string? purchaseType;
+    private string? customerName;
+    private string? refillType;
+    private int refillQuantity;
+    private string? paymentMethod;
+    private bool orderPlaced = false;
+
+    private int purchaseTotal => (purchaseType switch
+    {
+        "slim" => 200,
+        "round" => 250,
+        _ => 0
+    }) * purchaseQuantity;
+
+    private int refillTotal => (refillType switch
+    {
+        "slim" => 25,
+        "round" => 30,
+        _ => 0
+    }) * refillQuantity;
+
+    private void PlaceOrder()
+    {
+        if (string.IsNullOrWhiteSpace(customerName) || string.IsNullOrWhiteSpace(paymentMethod))
+            return;
+
+        orderPlaced = true;
+    }
+}
+```
+This component allows the customer to fill out an ordering form where it needs if the customer has a gallon, wants to purchase one, wants how many gallons, the type of gallon (either round or slim), the customer's name, the refill type, how many refills, and the payment method of choice.
+### Login/Signup Pages
+#### Login Page
+```C#
+
+```
+
+#### Signup Page
+```C#
+@code {
+    private string FullName { get; set; } = "";
+    private string Username { get; set; } = "";
+    private string Email { get; set; } = "";
+    private string ContactNumber { get; set; } = "";
+    private string Address { get; set; } = "";
+    private string Password { get; set; } = "";
+    private string ConfirmPassword { get; set; } = "";
+    private bool AgreeTerms { get; set; } = false;
+
+    private void HandleSignup()
+    {
+        if (!AgreeTerms)
+        {
+            // Show error - must agree to terms
+            Console.WriteLine("Please agree to the Terms and Conditions");
+            return;
+        }
+
+        if (Password != ConfirmPassword)
+        {
+            // Show error - passwords don't match
+            Console.WriteLine("Passwords do not match");
+            return;
+        }
+
+        // TODO: Implement signup logic
+        Console.WriteLine($"Signup attempt: {FullName}, {Username}");
+        // Navigation.NavigateTo("/login");
+    }
+
+    private void ShowTerms()
+    {
+        // TODO: Show terms and conditions modal or navigate to terms page
+        Console.WriteLine("Show Terms and Conditions");
+        // Navigation.NavigateTo("/terms");
+    }
+}
+```
+This component allows a potential customer to create an account for this service. It requires the user's details and shows errors if the user's entered passwords don't match or does not agree to the terms and conditions.
 ## 🚨 Important Links
 1. Figma - [Figma](https://www.figma.com/design/qDKawO6WHZ6pZayIyJRWcE/Wireframing-WSOA?node-id=0-1&t=2q8IbWdNnUfIcZg5-1)
 2. UML - [Relative Link](/UML.puml) OR [Google Drive](https://drive.google.com/file/d/1J8QeOCYmqnLIjpQS3NhUWjs6BF_PW3Lr/view?usp=sharing)
