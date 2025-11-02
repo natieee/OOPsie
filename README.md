@@ -171,7 +171,7 @@ OOPsie/
 }
 ```
 This component selects a random motivational quote and renders the sales chart.
-####  Order
+#### Order
 ```C#
 @code {
     private List<OrderModel> orders = new();
@@ -418,13 +418,27 @@ This Component allows the admin to see the history of orders made by customers.
     }
 }
 ```
+This component allows the admin the view the reviews of customers.
 
 ### Customer POV
 #### Home
 ```C#
+@code {
+    [Inject] private NavigationManager Navigation { get; set; } = default!;
 
+    // Navigation methods kept in case you need them for other purposes
+    private void NavigateToOrder()
+    {
+        Navigation.NavigateTo("/order");
+    }
+
+    private void NavigateToAppointment()
+    {
+        Navigation.NavigateTo("/appointment");
+        }
+    }
 ```
-
+This component simply allows the customer to navigate to the order and appointment pages.
 #### Order Placement
 ```C#
 @code {
@@ -462,12 +476,170 @@ This Component allows the admin to see the history of orders made by customers.
 }
 ```
 This component allows the customer to fill out an ordering form where it needs if the customer has a gallon, wants to purchase one, wants how many gallons, the type of gallon (either round or slim), the customer's name, the refill type, how many refills, and the payment method of choice.
+#### Feedback
+```C#
+@code {
+    private int selectedStar = 0;
+
+    private class Review
+    {
+        public string Author { get; set; } = "";
+        public string Comment { get; set; } = "";
+        public int Star { get; set; }
+    }
+
+    private List<Review> allReviews = new()
+    {
+        new Review { Author = "Anna", Comment = "Amazing water delivery! Always on time!", Star = 5 },
+        new Review { Author = "Mark", Comment = "Fantastic service and clean water!", Star = 5 },
+        new Review { Author = "Ella", Comment = "Very good experience!", Star = 4 },
+        new Review { Author = "Tom", Comment = "Delivery was okay, packaging could improve.", Star = 3 },
+        new Review { Author = "Cathy", Comment = "Not bad but delivery was a bit late.", Star = 3 },
+        new Review { Author = "Rico", Comment = "The bottle was slightly damaged.", Star = 2 },
+        new Review { Author = "Marie", Comment = "Terrible experience, never again.", Star = 1 },
+    };
+
+    private List<Review> filteredReviews = new();
+
+    private string newComment = "";
+    private int newStar = 0;
+    private bool isAnonymous = false;
+
+    protected override void OnInitialized()
+    {
+        filteredReviews = new(allReviews);
+    }
+
+    private void FilterReviews(int star)
+    {
+        selectedStar = star;
+
+        if (star == 0)
+            filteredReviews = new(allReviews);
+        else
+            filteredReviews = allReviews.Where(r => r.Star == star).ToList();
+
+        StateHasChanged();
+    }
+
+    private void SubmitFeedback()
+    {
+        if (!string.IsNullOrWhiteSpace(newComment))
+        {
+            string author = isAnonymous ? "Anonymous" : "Username";
+            allReviews.Add(new Review { Author = author, Comment = newComment, Star = newStar });
+            newComment = "";
+            newStar = 0;
+            isAnonymous = false;
+            FilterReviews(selectedStar);
+        }
+    }
+}
+```
+This component allows the customer to view other customer's reviews, filter the reviews by how many stars, and create a review.
+#### Order History
+```C#
+@code {
+    private string UserRole = "Admin"; // "Admin" or "Customer"
+    private string CurrentUser = "Aljiemer Ting"; // Example logged-in name Anna Cruz
+    private List<OrderModel> orders = new();
+
+    protected override void OnInitialized()
+    {
+        var allOrders = new List<OrderModel>
+        {
+            new() {
+                Id = "ORD-001",
+                Customer = "Anna Cruz",
+                GallonType = "Round Gallon",
+                Quantity = 2,
+                Total = 240.00m,
+                Status = "Delivered",
+                OutForDelivery = new DateTime(2025, 9, 30, 9, 15, 0),
+            },
+            new() {
+                Id = "ORD-002",
+                Customer = "Marco Diaz",
+                GallonType = "Slim Gallon",
+                Quantity = 1,
+                Total = 120.00m,
+                Status = "Processing",
+                OutForDelivery = new DateTime(2025, 10, 2, 11, 30, 0),
+            },
+            new() {
+                Id = "ORD-003",
+                Customer = "Jessa Flores",
+                GallonType = "Round Gallon",
+                Quantity = 3,
+                Total = 360.00m,
+                Status = "Pending"
+            }
+        };
+
+        // Filter: customers only see their own orders
+        if (UserRole == "Customer")
+            orders = allOrders.Where(o => o.Customer == CurrentUser).ToList();
+        else
+            orders = allOrders;
+
+        // Auto-calculate delivered time (+1 hour)
+        foreach (var o in orders)
+        {
+            if (o.Status == "Delivered" && o.OutForDelivery.HasValue)
+                o.TimeDelivered = o.OutForDelivery.Value.AddHours(1);
+        }
+
+        // Sort newest first
+        orders = orders.OrderByDescending(o => o.OutForDelivery ?? o.TimeDelivered ?? DateTime.MinValue).ToList();
+    }
+
+    private string GetStatusClass(string status) => status switch
+    {
+        "Delivered" => "status-delivered",
+        "Processing" => "status-processing",
+        "Pending" => "status-pending",
+        _ => ""
+    };
+
+    public class OrderModel
+    {
+        public string Id { get; set; } = "";
+        public string Customer { get; set; } = "";
+        public string GallonType { get; set; } = "";
+        public int Quantity { get; set; }
+        public decimal Total { get; set; }
+        public string Status { get; set; } = "";
+        public DateTime? OutForDelivery { get; set; }
+        public DateTime? TimeDelivered { get; set; }
+    }
+}
+```
+This component allows to see the customer's orders if the user is an admin and only their own orders if the user is a customer. It also sorts the orders by newest first.
+
 ### Login/Signup Pages
 #### Login Page
 ```C#
+@code {
+    private string SelectedRole { get; set; } = "Customer";
+    private string Username { get; set; } = "";
+    private string Password { get; set; } = "";
 
+    private void HandleLogin()
+    {
+        // TODO: Implement login logic
+        Console.WriteLine($"Login attempt: {SelectedRole}, {Username}");
+        // Navigation.NavigateTo("/dashboard");
+    }
+
+    private void HandleForgotPassword()
+    {
+        // TODO: Implement forgot password logic
+        Console.WriteLine("Forgot password clicked");
+        // Navigation.NavigateTo("/forgot-password");
+    }
+}
 ```
-
+This component handles the login form.
 #### Signup Page
 ```C#
 @code {
