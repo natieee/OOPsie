@@ -27,3 +27,4 @@
 /workspaces/OOPsie/main/obj/Debug/net8.0/main.pdb
 /workspaces/OOPsie/main/obj/Debug/net8.0/main.genruntimeconfig.cache
 /workspaces/OOPsie/main/obj/Debug/net8.0/ref/main.dll
+/workspaces/OOPsie/main/obj/Debug/net8.0/scopedcss/Components/AdminLayout/AdminLayout.razor.rz.scp.css

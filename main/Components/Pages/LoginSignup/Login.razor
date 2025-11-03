@@ -294,9 +294,7 @@
         <div class="forgot-password">
             <a href="#" @onclick="HandleForgotPassword">Forgot password?</a>
         </div>
-            <a href="/customer/home">
         <button class="login-btn" @onclick="HandleLogin">Login</button>
-            </a>
         <div class="switch-link">
             Don't have an account? <a href="/signup">Create account</a>
         </div>
@@ -313,7 +311,14 @@
         // TODO: Implement login logic
         Console.WriteLine($"Login attempt: {SelectedRole}, {Username}");
         // Navigation.NavigateTo("/dashboard");
-
+        if (SelectedRole == "Admin")
+        {
+            Navigation.NavigateTo("/admin/home");
+        }
+        else
+        {
+            Navigation.NavigateTo("/customer/home");
+        }
     }
 
     private void HandleForgotPassword()
