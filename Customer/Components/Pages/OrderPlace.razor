@@ -53,6 +53,11 @@
                     <span class="total-price">Purchase Total: ₱@purchaseTotal</span>
                 </div>
             
+            <!-- Address -->
+            <div class="form-group">
+                <label>Delivery / Pickup Address</label>
+                <textarea class="input-field address-field" rows="3" placeholder="Enter your full address here..." @bind="address"></textarea>
+            </div>
 
             <!-- Customer Name -->
             <div class="form-group">
@@ -110,6 +115,7 @@
     private string? refillType;
     private int refillQuantity;
     private string? paymentMethod;
+    private string? address;
     private bool orderPlaced = false;
 
     private int purchaseTotal => (purchaseType switch

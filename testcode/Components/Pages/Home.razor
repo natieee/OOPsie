@@ -1,256 +1,237 @@
-﻿@page "/"
-@page "/home"
-@layout testcode.Components.Layout.MainLayout
+﻿@page "/place-order"
+@layout Customer.Components.Layout.MainLayout
 
-<h3>Place Your Order</h3>
+<div class="placeorder-container">
+    <h2 class="page-title">🧴 Place Your Order</h2>
 
-@if (currentStep == 1)
-{
-    <div class="form-section">
-        <h4>Do you have a gallon?</h4>
-        <div class="form-group">
-            <label>
-                <input type="radio" name="hasGallon" value="true" 
-                       @onchange="@((e) => { hasGallon = true; StateHasChanged(); })" />
-                Yes
-            </label>
-            <label>
-                <input type="radio" name="hasGallon" value="false" 
-                       @onchange="@((e) => { hasGallon = false; StateHasChanged(); })" />
-                No
-            </label>
-        </div>
-        <button class="btn btn-primary" @onclick="GoToNextStep" disabled="@(!hasGallon.HasValue)">Confirm</button>
-        
-        <!-- Debug info -->
-        <div style="color: red; margin-top: 10px;">
-            Debug: hasGallon = @hasGallon, hasValue = @hasGallon.HasValue
-        </div>
-    </div>
-}
-else if (currentStep == 2)
-{
-    <div class="form-section">
-        <h4>Do you want to purchase a gallon?</h4>
-        <div class="form-group">
-            <label>
-                <input type="radio" name="purchaseGallon" value="true" 
-                       @onchange="@((e) => { purchaseGallon = true; StateHasChanged(); })" />
-                Yes
-            </label>
-            <label>
-                <input type="radio" name="purchaseGallon" value="false" 
-                       @onchange="@((e) => { purchaseGallon = false; StateHasChanged(); })" />
-                No
-            </label>
-        </div>
-        <button class="btn btn-primary" @onclick="GoToNextStep" disabled="@(!purchaseGallon.HasValue)">Confirm</button>
-    </div>
-}
-else if (currentStep == 3)
-{
-    <div class="form-section">
-        <h4>Purchase Gallon</h4>
-        <div class="form-group">
-            <label for="purchaseQuantity">Quantity:</label>
-            <input type="number" id="purchaseQuantity" @bind="purchaseQuantity" @oninput="CalculatePurchaseTotal" class="form-control" min="1" />
-        </div>
-        <div class="form-group">
-            <label for="purchaseGallonType">Gallon Type:</label>
-            <select id="purchaseGallonType" @onchange="OnPurchaseGallonTypeChanged" class="form-control">
-                <option value="">Select Type</option>
-                <option value="slim">Slim Gallon (200 pesos)</option>
-                <option value="round">Round Gallon (250 pesos)</option>
-            </select>
-        </div>
-        @if (purchaseTotalPrice > 0)
-        {
-            <div class="total-price">
-                <strong>Total Price: @purchaseTotalPrice pesos</strong>
+    
+    
+        <div class="order-form">
+            <!-- Have Gallon -->
+            <div class="form-group">
+                <label>Do you have a gallon?</label>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="hasGallon" value="yes" @onchange="() => hasGallon = true" checked="@hasGallon" /> Yes
+                    </label>
+                    <label>
+                        <input type="radio" name="hasGallon" value="no" @onchange="() => hasGallon = false" checked="@(!hasGallon)" /> No
+                    </label>
+                </div>
             </div>
-        }
-        <button class="btn btn-primary" @onclick="ConfirmGallonPurchase" disabled="@(purchaseQuantity <= 0 || string.IsNullOrEmpty(purchaseGallonType))">Confirm Purchase</button>
-    </div>
-}
-else if (currentStep == 4)
-{
-    <div class="order-form">
-        <h4>Order Details</h4>
-        
-        <div class="form-group">
-            <label for="customerName">Customer Name (name on gallon):</label>
-            <input type="text" id="customerName" @bind="customerName" class="form-control" />
-        </div>
-        
-        <div class="form-group">
-            <label for="gallonType">Type of Gallon:</label>
-            <select id="gallonType" @onchange="OnGallonTypeChanged" class="form-control">
-                <option value="">Select Type</option>
-                <option value="slim">Slim Gallon (25 pesos)</option>
-                <option value="round">Round Gallon (30 pesos)</option>
-            </select>
-        </div>
-        
-        <div class="form-group">
-            <label for="quantity">Quantity:</label>
-            <input type="number" id="quantity" @bind="quantity" @oninput="CalculateTotal" class="form-control" min="1" />
-        </div>
-        
-        @if (totalPrice > 0)
-        {
-            <div class="total-price">
-                <strong>Total Price: @totalPrice pesos</strong>
+
+            <!-- Purchase Gallon -->
+            <div class="form-group">
+                <label>Do you want to purchase a gallon?</label>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="purchaseGallon" value="yes" @onchange="() => purchaseGallon = true" checked="@purchaseGallon" /> Yes
+                    </label>
+                    <label>
+                        <input type="radio" name="purchaseGallon" value="no" @onchange="() => purchaseGallon = false" checked="@(!purchaseGallon)" /> No
+                    </label>
+                </div>
             </div>
-        }
-        
-        <div class="form-group">
-            <label for="paymentMethod">Payment Method:</label>
-            <select id="paymentMethod" @bind="paymentMethod" class="form-control">
-                <option value="">Select Payment Method</option>
-                <option value="cash">Cash</option>
-                <option value="card">Credit/Debit Card</option>
-                <option value="gcash">GCash</option>
-                <option value="maya">Maya</option>
-            </select>
+
+            
+                <!-- Purchase Gallon Quantity and Type -->
+                <div class="form-group">
+                    <label>Quantity of Gallons to Purchase</label>
+                    <input class="input-field" type="number" min="1" @bind="purchaseQuantity" @bind:event="oninput" />
+                </div>
+
+                <div class="form-group">
+                    <label>Type of Gallon to Purchase</label>
+                    <select class="dropdown" @bind="purchaseType" @bind:event="onchange">
+                        <option value="">Select type</option>
+                        <option value="slim">Slim Gallon - ₱200</option>
+                        <option value="round">Round Gallon - ₱250</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <span class="total-price">Purchase Total: ₱@purchaseTotal</span>
+                </div>
+            
+
+            <!-- Customer Name -->
+            <div class="form-group">
+                <label>Customer Name (Name on Gallon)</label>
+                <input class="input-field" type="text" @bind="customerName" />
+            </div>
+
+            <!-- Refill Type -->
+            <div class="form-group">
+                <label>Refill Gallon Type</label>
+                <select class="dropdown" @bind="refillType" @bind:event="onchange">
+                    <option value="">Select type</option>
+                    <option value="slim">Slim - ₱25</option>
+                    <option value="round">Round - ₱30</option>
+                </select>
+            </div>
+
+            <!-- Refill Quantity -->
+            <div class="form-group">
+                <label>Refill Quantity</label>
+                <input class="input-field" type="number" min="1" @bind="refillQuantity" @bind:event="oninput" />
+            </div>
+
+            <div class="form-group">
+                <span class="total-price">Refill Total: ₱@refillTotal</span>
+            </div>
+
+            <!-- Payment Method -->
+            <div class="form-group">
+                <label>Payment Method</label>
+                <select class="dropdown" @bind="paymentMethod">
+                    <option value="">Select method</option>
+                    <option value="cash">Cash</option>
+                    <option value="ewallet">Ewallet</option>
+                </select>
+            </div>
+
+            <button class="submit-btn" @onclick="PlaceOrder">Place Order</button>
         </div>
-        
-        <button class="btn btn-success" @onclick="PlaceOrder" disabled="@(!IsFormValid())">Place Order</button>
-    </div>
-}
-else if (currentStep == 5)
-{
-    <div class="order-placed">
-        <div class="alert alert-success">
-            <h4>Order Placed Successfully!</h4>
-            <p>Please wait 10-15 minutes for the gallon pickup at your provided address.</p>
-            <p>Check the order history page for your order status.</p>
+    
+        <div class="confirmation-message">
+            <p>✅ <strong>Order placed successfully!</strong></p>
+            <p>Please wait <strong>10–15 minutes</strong> for the gallon pickup at your provided address.</p>
+            <p>Check the <strong>Order History</strong> page for your order status.</p>
         </div>
-    </div>
-}
+    
+</div>
 
 @code {
-    private int currentStep = 1;
-    private bool? hasGallon = null;
-    private bool? purchaseGallon = null;
-    
-    // Gallon purchase fields
-    private int purchaseQuantity = 0;
-    private string purchaseGallonType = "";
-    private int purchaseTotalPrice = 0;
-    
-    // Main order fields
-    private string customerName = "";
-    private string gallonType = "";
-    private int quantity = 0;
-    private int totalPrice = 0;
-    private string paymentMethod = "";
+    private bool hasGallon = true;
+    private bool purchaseGallon = false;
+    private int purchaseQuantity;
+    private string? purchaseType;
+    private string? customerName;
+    private string? refillType;
+    private int refillQuantity;
+    private string? paymentMethod;
+    private bool orderPlaced = false;
 
-    private void GoToNextStep()
+    private int purchaseTotal => (purchaseType switch
     {
-        if (currentStep == 1)
-        {
-            // Step 1: Has gallon?
-            if (hasGallon.HasValue)
-            {
-                if (hasGallon.Value)
-                {
-                    // Has gallon, ask if they want to purchase another
-                    currentStep = 2;
-                }
-                else
-                {
-                    // No gallon, go directly to purchase gallon
-                    currentStep = 3;
-                }
-            }
-        }
-        else if (currentStep == 2)
-        {
-            // Step 2: Want to purchase gallon?
-            if (purchaseGallon.HasValue)
-            {
-                if (purchaseGallon.Value)
-                {
-                    // Want to purchase gallon
-                    currentStep = 3;
-                }
-                else
-                {
-                    // Don't want to purchase, go to main order
-                    currentStep = 4;
-                }
-            }
-        }
-        StateHasChanged();
-    }
+        "slim" => 200,
+        "round" => 250,
+        _ => 0
+    }) * purchaseQuantity;
 
-    private void OnPurchaseGallonTypeChanged(ChangeEventArgs e)
+    private int refillTotal => (refillType switch
     {
-        purchaseGallonType = e.Value?.ToString() ?? "";
-        CalculatePurchaseTotal();
-        StateHasChanged();
-    }
+        "slim" => 25,
+        "round" => 30,
+        _ => 0
+    }) * refillQuantity;
 
-    private void OnGallonTypeChanged(ChangeEventArgs e)
-    {
-        gallonType = e.Value?.ToString() ?? "";
-        CalculateTotal();
-        StateHasChanged();
-    }
-    
-    private void ConfirmGallonPurchase()
-    {
-        if (!hasGallon.Value)
-        {
-            // If they didn't have a gallon and purchased one, complete order
-            currentStep = 5;
-        }
-        else
-        {
-            // If they had a gallon and purchased another, go to main order
-            currentStep = 4;
-        }
-        StateHasChanged();
-    }
-    
-    private void CalculatePurchaseTotal()
-    {
-        if (purchaseQuantity > 0 && !string.IsNullOrEmpty(purchaseGallonType))
-        {
-            purchaseTotalPrice = purchaseGallonType == "slim" ? purchaseQuantity * 200 : purchaseQuantity * 250;
-        }
-        else
-        {
-            purchaseTotalPrice = 0;
-        }
-    }
-    
-    private void CalculateTotal()
-    {
-        if (quantity > 0 && !string.IsNullOrEmpty(gallonType))
-        {
-            totalPrice = gallonType == "slim" ? quantity * 25 : quantity * 30;
-        }
-        else
-        {
-            totalPrice = 0;
-        }
-    }
-    
-    private bool IsFormValid()
-    {
-        return !string.IsNullOrEmpty(customerName) &&
-               !string.IsNullOrEmpty(gallonType) &&
-               quantity > 0 &&
-               !string.IsNullOrEmpty(paymentMethod);
-    }
-    
     private void PlaceOrder()
     {
-        if (IsFormValid())
-        {
-            currentStep = 5;
-            StateHasChanged();
-        }
+        if (string.IsNullOrWhiteSpace(customerName) || string.IsNullOrWhiteSpace(paymentMethod))
+            return;
+
+        orderPlaced = true;
     }
 }
+
+<style>
+.placeorder-container {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 2rem;
+    text-align: center;
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    background-image: url('/images/water-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.page-title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: white;
+}
+
+.order-form {
+    background: rgba(255,255,255,0.95);
+    color: #063970;
+    border-radius: 12px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 800px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.form-group {
+    margin-bottom: 1.2rem;
+    text-align: left;
+}
+
+.form-group label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.input-field,
+.dropdown {
+    width: 100%;
+    padding: 0.6rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+.radio-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.total-price {
+    font-weight: bold;
+    color: #063970;
+    background: #eaf4ff;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.submit-btn {
+    background: linear-gradient(135deg, #00A3A3, #2eb2ff);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: block;
+    margin: 1rem auto 0;
+}
+
+.submit-btn:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #4b8eda, #00A3A3);
+}
+
+.confirmation-message {
+    background: rgba(255,255,255,0.95);
+    color: #063970;
+    border-radius: 12px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    text-align: center;
+}
+</style>
