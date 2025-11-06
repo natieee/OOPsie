@@ -1,6 +1,11 @@
 @page "/signup"
 @inject NavigationManager Navigation
-@layout main.Components.LSLayout.EmptyLayout
+@rendermode InteractiveServer
+@using main.Data
+@using main.Data.Entities
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.Web
 
 <style>
     * {
@@ -38,6 +43,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: center;
         position: relative;
         overflow: hidden;
     }
@@ -58,37 +64,43 @@
     .brand-content {
         position: relative;
         z-index: 1;
+        text-align: center;
+        width: 100%;
+    }
+
+    .brand-logo {
+        margin-bottom: 30px;
+        padding: 12px 20px;
         display: flex;
-        flex-direction: column;
+        align-items: center;
         justify-content: center;
+        overflow: hidden;
+        border-radius: 24px;
+    }
+
+    .brand-logo img {
+        width: 100%;
         height: 100%;
+        object-fit: cover;
+        display: block;
+        border-radius: inherit;
     }
 
     .brand-title {
-        font-size: 42px;
+        font-size: 32px;
         font-weight: 800;
-        line-height: 1.1;
-        margin-bottom: 20px;
-        letter-spacing: 0.5px;
+        line-height: 1.2;
+        margin-bottom: 15px;
+        letter-spacing: 0.3px;
     }
 
     .brand-subtitle {
-        font-size: 20px;
+        font-size: 18px;
         opacity: 0.95;
+        margin-top: 20px;
         font-weight: 600;
         letter-spacing: 0.8px;
         color: #a8d8ff;
-        margin-bottom: 30px;
-    }
-
-    .brand-tagline {
-        font-size: 16px;
-        opacity: 0.8;
-        font-style: italic;
-        line-height: 1.5;
-        border-left: 3px solid #a8d8ff;
-        padding-left: 15px;
-        margin-top: 30px;
     }
 
     .form-section {
@@ -332,7 +344,6 @@
         .brand-section {
             padding: 30px 20px;
             min-height: 200px;
-            text-align: center;
         }
         
         .form-section {
@@ -344,12 +355,18 @@
             gap: 12px;
         }
 
+        .brand-logo {
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+        }
+
         .brand-title {
-            font-size: 32px;
+            font-size: 24px;
         }
 
         .brand-subtitle {
-            font-size: 18px;
+            font-size: 16px;
         }
 
         .form-title {
@@ -371,7 +388,7 @@
         }
 
         .brand-title {
-            font-size: 28px;
+            font-size: 20px;
         }
 
         .form-title {
@@ -392,14 +409,14 @@
         <div class="water-drop water-drop-2"></div>
         <div class="water-drop water-drop-3"></div>
         <div class="brand-content">
+            <div class="brand-logo">
+                <img src=https://i.postimg.cc/tJjFPpFj/566713130-2648065195543491-8938382609362833392-n.png alt="Water Station Online Appointment Logo" width="240" height="240" />
+            </div>
             <div class="brand-title">
                 Water Station<br />
                 Online Appointment
             </div>
-            <div class="brand-subtitle">Pure Water, Pure Life</div>
-            <div class="brand-tagline">
-                Your trusted partner for clean, refreshing water delivered right to your doorstep
-            </div>
+            <div class="brand-subtitle">DRINK YOUR WATER BITCH!</div>
         </div>
     </div>
 
@@ -411,6 +428,7 @@
         </div>
 
         <div class="form-content">
+        
             <!-- Row 1: Fullname -->
             <div class="form-group full-width">
                 <label class="form-label">Full Name</label>
@@ -457,12 +475,18 @@
             <div class="checkbox-group">
                 <input type="checkbox" id="terms" @bind="AgreeTerms" />
                 <label for="terms">
-                    I agree to the <a href="#" class="terms-link" @onclick="ShowTerms">Terms and Conditions</a>
+                    I agree to the <a href="#" class="terms-link" @onclick="ShowTerms" @onclick:preventDefault>Terms and Conditions</a>
                 </label>
             </div>
 
             <div class="form-actions">
-                <button class="signup-btn" @onclick="HandleSignup">Create account</button>
+                @if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @errorMessage
+                    </div>
+                }
+                <button type="button" class="signup-btn" @onclick="HandleSignup">Create account</button>
 
                 <div class="switch-link">
                     Already have an account? <a href="/login">Log in</a>
@@ -473,6 +497,12 @@
 </div>
 
 @code {
+    // Injected Services
+    [Inject] private AppDbContext _context { get; set; } = default!;
+    [Inject] private IPasswordHasher<User> _passwordHasher { get; set; } = default!;
+    [Inject] private NavigationManager _navigationManager { get; set; } = default!;
+
+    // Form fields
     private string FullName { get; set; } = "";
     private string Username { get; set; } = "";
     private string Email { get; set; } = "";
@@ -482,31 +512,74 @@
     private string ConfirmPassword { get; set; } = "";
     private bool AgreeTerms { get; set; } = false;
 
-    private void HandleSignup()
-    {
-        if (!AgreeTerms)
-        {
-            // Show error - must agree to terms
-            Console.WriteLine("Please agree to the Terms and Conditions");
-            return;
-        }
+    // To display errors to the user
+    private string errorMessage = "";
 
+    private async Task HandleSignup()
+    {
+        errorMessage = ""; // Clear any previous errors
+
+        // 1. Basic form validation
         if (Password != ConfirmPassword)
         {
-            // Show error - passwords don't match
-            Console.WriteLine("Passwords do not match");
+            errorMessage = "Passwords do not match.";
             return;
         }
 
-        // TODO: Implement signup logic
-        Console.WriteLine($"Signup attempt: {FullName}, {Username}");
-        // Navigation.NavigateTo("/login");
+        if (!AgreeTerms)
+        {
+            errorMessage = "You must agree to the Terms and Conditions.";
+            return;
+        }
+
+        // 2. Check if user already exists
+        if (await _context.Users.AnyAsync(u => u.Username == Username))
+        {
+            errorMessage = "Username is already taken.";
+            return;
+        }
+
+        if (await _context.Users.AnyAsync(u => u.Email == Email))
+        {
+            errorMessage = "Email is already in use.";
+            return;
+        }
+
+        // 3. Create the new user object
+        var newUser = new User
+        {
+            FullName = FullName,
+            Username = Username,
+            Email = Email,
+            ContactNumber = ContactNumber,
+            Address = Address,
+            Role = "Customer", // All signups are Customers by default
+            DateCreated = DateTime.Now
+        };
+
+        // 4. Hash the password
+        newUser.PasswordHash = _passwordHasher.HashPassword(newUser, Password);
+
+        // 5. Save to database
+        try
+        {
+            _context.Users.Add(newUser);
+            await _context.SaveChangesAsync();
+
+            // 6. Redirect to login page on success
+            _navigationManager.NavigateTo("/login");
+        }
+        catch (Exception ex)
+        {
+            // Log the error (in a real app) and show a generic message
+            errorMessage = "An error occurred while creating your account. Please try again.";
+            Console.WriteLine(ex.Message); // For debugging
+        }
     }
 
-    private void ShowTerms()
+    private void ShowTerms(MouseEventArgs e)
     {
         // TODO: Show terms and conditions modal or navigate to terms page
         Console.WriteLine("Show Terms and Conditions");
-        // Navigation.NavigateTo("/terms");
     }
 }
