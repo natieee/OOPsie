@@ -1,0 +1,77 @@
+{
+  "Version": 1,
+  "Hash": "FuIsAnn9aNEHR/zBgGhIzKLXbTShVcMpW0dHvcR/eF0=",
+  "Source": "CRUD",
+  "BasePath": "_content/CRUD",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "CRUD/wwwroot",
+      "Source": "CRUD",
+      "ContentRoot": "/workspaces/OOPsie/CRUD/wwwroot/",
+      "BasePath": "_content/CRUD",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "/workspaces/OOPsie/CRUD/obj/Debug/net8.0/scopedcss/bundle/CRUD.styles.css",
+      "SourceId": "CRUD",
+      "SourceType": "Computed",
+      "ContentRoot": "/workspaces/OOPsie/CRUD/obj/Debug/net8.0/scopedcss/bundle/",
+      "BasePath": "_content/CRUD",
+      "RelativePath": "CRUD.styles.css",
+      "AssetKind": "All",
+      "AssetMode": "CurrentProject",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "ScopedCss",
+      "AssetTraitValue": "ApplicationBundle",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "/workspaces/OOPsie/CRUD/obj/Debug/net8.0/scopedcss/bundle/CRUD.styles.css"
+    },
+    {
+      "Identity": "/workspaces/OOPsie/CRUD/obj/Debug/net8.0/scopedcss/projectbundle/CRUD.bundle.scp.css",
+      "SourceId": "CRUD",
+      "SourceType": "Computed",
+      "ContentRoot": "/workspaces/OOPsie/CRUD/obj/Debug/net8.0/scopedcss/projectbundle/",
+      "BasePath": "_content/CRUD",
+      "RelativePath": "CRUD.bundle.scp.css",
+      "AssetKind": "All",
+      "AssetMode": "Reference",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "ScopedCss",
+      "AssetTraitValue": "ProjectBundle",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "/workspaces/OOPsie/CRUD/obj/Debug/net8.0/scopedcss/projectbundle/CRUD.bundle.scp.css"
+    },
+    {
+      "Identity": "/workspaces/OOPsie/CRUD/wwwroot/app.css",
+      "SourceId": "CRUD",
+      "SourceType": "Discovered",
+      "ContentRoot": "/workspaces/OOPsie/CRUD/wwwroot/",
+      "BasePath": "_content/CRUD",
+      "RelativePath": "app.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/app.css"
+    }
+  ]
+}
