@@ -2,6 +2,8 @@
 @page "/login"
 @inject NavigationManager Navigation
 @layout main.Components.LSLayout.EmptyLayout
+@inject main.Services.AuthService AuthService
+
 
 <style>
     * {
@@ -294,7 +296,9 @@
         <div class="forgot-password">
             <a href="#" @onclick="HandleForgotPassword">Forgot password?</a>
         </div>
+        <a href="/admin/home">
         <button class="login-btn" @onclick="HandleLogin">Login</button>
+        </a>
         <div class="switch-link">
             Don't have an account? <a href="/signup">Create account</a>
         </div>

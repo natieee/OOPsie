@@ -56,7 +56,7 @@ html, body {
     width: 100vw;
     height: 100vh;
     font-family: 'Poppins', sans-serif;
-    position: fixed;
+    min-height: 100vh; /* instead of fixed */
     top: 0;
     left: 0;
     margin: 0;
@@ -125,17 +125,13 @@ nav {
 .main-content {
     flex: 1;
     position: relative;
+    width: calc(100% - 250px);
+    height: auto;
     overflow-y: auto;
-    display: flex;
-    margin: 0;
-    padding: 0;
-    width: calc(100vw - 250px);
-    height: 100vh;
-    background: white; /* ← ADD THIS */
 }
 
 .background-overlay {
-    background-image: url('https://learnandsupport.getolympus.com/sites/default/files/styles/hero_large/public/2020-10/amico_-_water_droplets_1.jpg?itok=kJ972xkJ');
+    background-image: url('/images/water bg.jpg');
     background-size: cover;
     background-position: center;
     filter: blur(3px) brightness(0.95);

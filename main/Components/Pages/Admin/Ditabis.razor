@@ -1,0 +1,66 @@
+@page "/viewdatabase"
+@using main.Data
+@using main.Models
+@using Microsoft.EntityFrameworkCore
+@rendermode InteractiveServer
+
+<h1>Database Viewer - Users</h1>
+
+<h2>Users</h2>
+
+@if (users != null && users.Any())
+{
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Full Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Contact Number</th>
+            <th>Address</th>
+            <th>Password</th>
+            <th>Created At</th>
+        </tr>
+        @foreach (var user in users)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.FullName</td>
+                <td>@user.Username</td>
+                <td>@user.Email</td>
+                <td>@user.ContactNumber</td>
+                <td>@user.Address</td>
+                <td>@user.PasswordHash</td>
+                <td>@user.CreatedAtUtc</td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>No users found.</p>
+}
+
+<button @onclick="RefreshData">Refresh</button>
+
+@code {
+    [Inject] private AppDbContext Db { get; set; } = null!;
+
+    private List<main.Models.User>? users;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        users = await Db.Users.ToListAsync();
+        StateHasChanged();
+    }
+
+    private async Task RefreshData()
+    {
+        await LoadData();
+    }
+}

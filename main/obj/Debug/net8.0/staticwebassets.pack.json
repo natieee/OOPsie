@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets/app.css"
     },
     {
+      "Id": "/workspaces/OOPsie/main/wwwroot/images/water bg.jpg",
+      "PackagePath": "staticwebassets/images/water bg.jpg"
+    },
+    {
       "Id": "obj/Debug/net8.0/staticwebassets/msbuild.build.main.props",
       "PackagePath": "build\\main.props"
     },

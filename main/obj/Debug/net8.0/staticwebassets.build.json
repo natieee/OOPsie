@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "12q08eRFAOf61utcS962YupGZ42tJD01r2xbh4b4v88=",
+  "Hash": "VU3si5UnhEEfFaqw/MTKR9YuROVUZPctwb55pQnUxRY=",
   "Source": "main",
   "BasePath": "_content/main",
   "Mode": "Default",
@@ -72,6 +72,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/app.css"
+    },
+    {
+      "Identity": "/workspaces/OOPsie/main/wwwroot/images/water bg.jpg",
+      "SourceId": "main",
+      "SourceType": "Discovered",
+      "ContentRoot": "/workspaces/OOPsie/main/wwwroot/",
+      "BasePath": "_content/main",
+      "RelativePath": "images/water bg.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/water bg.jpg"
     }
   ]
 }
