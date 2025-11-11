@@ -1,688 +1,858 @@
 <p align="center">
-<img src="https://i.postimg.cc/tJjFPpFj/566713130-2648065195543491-8938382609362833392-n.png">
+  <img src="wwwroot/images/logo.png" alt="Water Station Online Appointment Logo" width="200">
 </p>
 
-----
+---
 
-# WSOA - Water Station Online Appointment
+# 💧 Water Station Online Appointment (WSOA)
 
-A simple application built with **ASP.NET Core Blazor Server** used for online transactions of water refill servicers.
+> **A comprehensive water refill service management system built with ASP.NET Core Blazor Server**
+
+A modern, user-friendly web application designed for managing online water refill transactions. Customers can place orders, track their delivery status, and provide feedback, while administrators can manage orders, process payments, and respond to customer inquiries—all in real-time.
+
+---
 
 ## 🎯 Overview
 
-With a simple, interactive web interface, this application uses Entity Framework Core to show basic database operations. It is intended for learning C# web development and object-oriented programming ideas.
+**WSOA** is an educational project demonstrating full-stack web development using **ASP.NET Core Blazor Server** and **SQLite**. It showcases essential concepts including:
 
-## 🚀 How to Run
+- 🏗️ **Entity Framework Core** for database operations
+- 🎨 **Blazor Server** for interactive, real-time UI
+- 👥 **Role-based access control** (Admin vs. Customer)
+- 💾 **SQLite database** with persistent data storage
+- 🔐 **User authentication** and account management
+- 📊 **Order management** with status tracking
+- 💬 **Feedback system** with admin replies
+
+---
+
+## 🚀 Getting Started
 
 ### Prerequisites
-- .NET 8 SDK
-- Visual Studio Code (recommended)
 
-### Simple Instructions
-1. **Navigate to the project directory**:
+Before you begin, ensure you have the following installed:
+
+- **[.NET 8 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)** or higher
+- **Visual Studio Code** (recommended) or **Visual Studio 2022**
+- **Git** (optional, for cloning)
+
+### Installation Steps
+
+1. **Clone or navigate to the project directory**:
    ```bash
-   **Admin POV**
-   cd /workspaces/OOPsie/Admin
-   **Customer POV**
-   cd /workspaces/OOPsie/Customer
-   **Login and Signup Page**
-   cd /workspaces/OOPsie/LoginSignup
+   cd c:\Users
    ```
 
-2. **Build the application**:
+2. **Navigate to the application folder**:
+   ```bash
+   cd test
+   ```
+
+3. **Build the application**:
    ```bash
    dotnet build
    ```
 
-3. **Run the application**:
+4. **Run the application**:
    ```bash
    dotnet run
    ```
 
-4. **Open in browser**:
-   - The application will show the URL (usually `http://localhost:5000` or similar)
-   - Open that URL in your web browser
+5. **Open in your browser**:
+   - The application will output a URL (typically `http://localhost:5000` or `http://localhost:5295`)
+   - Copy and paste the URL into your web browser
 
-## 📱 How to Use the Application
+6. **Access the application**:
+   - You'll be redirected to the **Login/Signup** page
+   - Create a new account or use existing credentials
 
-### Sign-Up
-1. Fill up the **full Name, username, address**
-2. Add an **email address**
-3. Enter the **contact number** 
-4. Create a **password** and confirm by typing it again
-5. Agree to the **terms and conditions** of creating an account
-6. Click **"Create Account"** button
+---
 
-### Login
-1. Choose whether to login as **Customer or Admin**
-2. Write the **username** and **password**
-3. Click the **login** button
+## 📱 User Roles & Features
 
-### Admin POV
-1. Open the **Home** page to view the sales summary
-2. Open the **Orders** page to modify the order status
-3. Press the **Order Status** of an order to change it to either **pending, picked up, delivered, or cancelled**
-4. Press the **Payment Status** of an order to change it to either **pending, successful, failed, or refunded** 
-5. Click **Search & Filter** to search for specific **name, status, or date & time**
-6. Open the **Feedback** page to view the feedbacks
-7. Click the **"reply"** button to reply on the feedbacks
-8. Press **"send"** to post the reply
-9. Open the **About Us** page to view information about the page
+### 🔐 Authentication
 
-### Customer POV
-1. Open the **Home** page to see what the site has to offer
-2. Open the **Place Order** page to place an order
-- **Select** your answer on the questions asking if you have a gallon and if you want to purchase one
-- Choose the **type of gallon** and enter the **quantity** you want to **purchase**
-- Write the **customer name** that you want to put in the gallon
-- Choose the **type of gallon** and enter the **quantity** you want to **refill**
-- Select the **payment method** by clicking the drop-down button
-- Click the **"Place Order"** button to place the order
-3. Open the **Order History** page to see your order status and history
-4. Open the **Feedback** page to view other people's feedback as well as to write your own
-- Enter your **feedback** about the product/service
-- Choose if you want to make your name **hidden** for other users or not
-- Select the **ratings** that you'll give to the system and company
-- Click the **Submit Feedback** button to post your comment
-5. Open the **About Us** page to view information about the page
+#### Sign-Up (Create New Account)
+1. Click **"Create Account"** on the login page
+2. Fill in the following information:
+   - **Full Name** - Your complete name
+   - **Username** - Unique identifier (min 3 characters)
+   - **Email Address** - Valid email for account recovery
+   - **Contact Number** - Mobile number for order updates
+   - **House Number** - Delivery address (house/building number)
+   - **Street** - Street name
+   - **Barangay** - Barangay in Navotas City
+   - **Password** - Strong password (min 6 characters)
+   - **Confirm Password** - Must match the password above
+   - **Terms & Conditions** - Check to agree
+3. Click **"Create Account"** button
+4. Account is created and you're ready to log in
 
+#### Login
+1. Enter your **Username** and **Password**
+2. Click **"Login"** button
+3. You'll be redirected to your dashboard/homepage
 
-### Logging Out
-1. Click the **Logout** button to sign out of the program
+#### Forgot Password (If Applicable)
+- Use the **"Forgot Password?"** link to reset your password
+- Follow the email recovery instructions
+
+---
+
+## 👤 Customer Portal
+
+The customer dashboard provides a complete order management and feedback system.
+
+### 📍 **Home**
+- Welcome page with service overview
+- Quick navigation to key features
+- Promotional banners or announcements
+- Information about water gallon types and pricing
+
+### 🛒 **Place Order**
+Create a new water refill order with these steps:
+
+1. **Gallon Information**:
+   - Answer: "Do you have an existing gallon?" (Yes/No)
+   - Answer: "Do you want to purchase a gallon?" (Yes/No)
+
+2. **Purchase Gallons** (if applicable):
+   - Select gallon **type**: Slim or Round
+   - Enter **quantity** to purchase
+   - Each gallon comes with initial refill
+
+3. **Refill Gallons** (if applicable):
+   - Select gallon **type**: Slim or Round
+   - Enter **quantity** to refill
+   - Only for existing gallons
+
+4. **Customer Information**:
+   - Enter **customer name** to put on the order
+   - Enter saved address or a new one
+   - **House Number, Street, Barangay** (Navotas City)
+
+5. **Payment Method**:
+   - Select: **Cash** or **E-Wallet** (PayMaya, GCash, etc.)
+   - Review **total price** before submission
+
+6. **Submit Order**:
+   - Click **"Place Order"** button
+   - Order confirmation will be displayed
+   - You'll receive an order ID for tracking
+
+### 📋 **Order History**
+- View all your past and current orders
+- Track **order status**: Pending → Completed / Cancelled
+- See **payment status**: Pending → Completed / Cancelled
+- View detailed information:
+  - Order ID and creation date
+  - Items ordered (purchase/refill quantities)
+  - Delivery address
+  - Total amount paid
+  - Current status
+- Filter or search orders by date
+
+### 💬 **Feedback**
+Engage with the service by leaving feedback:
+
+1. **Write Feedback**:
+   - Enter your **feedback message** about the product/service
+   - Share your experience and suggestions
+
+2. **Rating System**:
+   - Select a **rating** (1-5 stars)
+   - Rate your overall experience
+
+3. **Privacy Settings**:
+   - Choose to make your **name hidden** for other users
+   - Public feedback helps the business improve
+
+4. **View Feedback**:
+   - Read feedback from other customers
+   - View admin replies to feedback
+   - See helpful comments and suggestions
+
+5. **Submit Feedback**:
+   - Click **"Submit Feedback"** button
+   - Your feedback is posted immediately
+   - Admin will review and may reply
+
+### 👤 **Account Settings**
+- View and update **profile information**:
+  - Full name
+  - Email address
+  - Contact number
+  - Delivery address (house, street, barangay)
+- Change **password**
+- View **account creation date**
+- Manage **privacy settings** (if applicable)
+
+### ℹ️ **About Us**
+- Information about the water station business
+- Company mission and values
+- Service details and availability
+- Contact information
+
+### 🚪 **Logout**
+- Click **"Logout"** button (usually in navigation bar)
+- You'll be returned to the login page
+- Your session ends securely
+
+---
+
+## 👨‍💼 Admin Portal
+
+Comprehensive order and customer management system for administrators.
+
+### 📊 **Dashboard / Home**
+Administrative overview and analytics:
+
+- **Sales Summary**:
+  - Total revenue for selected period
+  - Number of orders processed
+  - Order completion rate
+  - Payment success rate
+
+- **Quick Stats**:
+  - Pending orders
+  - Pending payments
+  - New feedback awaiting replies
+  - Active customers
+
+- **Charts & Graphs** :
+  - Order trends over time
+  - Revenue 
+
+### 📦 **Orders Management**
+Complete order management and fulfillment system:
+
+#### View All Orders
+- Table displaying all customer orders
+- Shows: Order ID, Customer Name, Order Date, Status, Payment Status, Total Amount
+
+#### Order Details
+Click on an order to view:
+- Customer information and delivery address
+- Items ordered (purchase/refill details)
+- Payment method and total amount
+- Current order status
+- Current payment status
+- Order timeline
+
+#### Update Order Status
+For each order, update the fulfillment status:
+
+| Status | Description |
+|--------|-------------|
+| **Pending** | Order received, awaiting processing |
+| **Picked Up** | Items ready and picked from warehouse |
+| **Delivered** | Order delivered to customer |
+| **Cancelled** | Order cancelled by admin or customer |
+| **Completed** | Order fulfilled and closed |
+
+#### Update Payment Status
+Monitor and update payment processing:
+
+| Status | Description |
+|--------|-------------|
+| **Pending** | Payment awaiting confirmation |
+| **Completed** | Payment received and verified |
+| **Refunded** | Payment refunded to customer |
+
+### 💬 **Feedback Management**
+Manage customer feedback and maintain service quality:
+
+#### View All Feedback
+- List of customer feedback with ratings
+- Shows customer name (or "Anonymous" if hidden)
+- Rating (1-5 stars)
+- Feedback date and preview text
+- Reply status
+
+#### Read Full Feedback
+- Click on feedback to view complete message
+- See customer rating and creation date
+- View any existing admin replies
+
+#### Reply to Feedback
+1. Click **"Reply"** button on feedback
+2. Type your **admin response** message
+3. Address customer concerns or thank them for feedback
+4. Click **"Post Reply"** to post your reply
+
+#### Feedback Visibility
+- Track which feedback came from **named** vs **anonymous** customers
+- Filter to show only **replied** or **unreplied** feedback
+- See feedback **rating distribution**
+
+### 👥 **Account / Admin Info**
+- View admin profile information
+- Update admin details (name, email, etc.)
+- Change admin password
+- View admin privileges and permissions
+
+### ℹ️ **About Us**
+- Manage company information
+- View/edit business description
+- Display important business details
+- Company contact information
+
+### 🚪 **Logout**
+- Click **"Logout"** button to exit admin portal
+- Secure session termination
+
+---
+
+## 🗄️ Database Structure
+
+### SQLite Database
+- **Location**: `app.db` in the application directory
+- **Type**: SQLite (file-based, no server required)
+- **ORM**: Entity Framework Core 8.0
+
+### Database Tables
+
+#### **Users Table**
+Stores user account information for authentication and profiles.
+
+```sql
+CREATE TABLE Users (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    FullName TEXT NOT NULL,
+    Username TEXT NOT NULL UNIQUE,
+    Email TEXT NOT NULL UNIQUE,
+    ContactNumber TEXT NOT NULL,
+    HouseNo TEXT NOT NULL,
+    Street TEXT NOT NULL,
+    Barangay TEXT NOT NULL,
+    Password TEXT NOT NULL,
+    Role TEXT NOT NULL DEFAULT 'Customer',
+    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+| Column | Type | Description | Constraints |
+|--------|------|-------------|-------------|
+| `Id` | INTEGER | Unique user identifier | PRIMARY KEY, AUTO INCREMENT |
+| `FullName` | TEXT | User's complete name | NOT NULL, Max 100 chars |
+| `Username` | TEXT | Unique login identifier | NOT NULL, UNIQUE, Max 50 chars |
+| `Email` | TEXT | Email address | NOT NULL, UNIQUE, Max 100 chars |
+| `ContactNumber` | TEXT | Phone number | NOT NULL, Max 20 chars |
+| `HouseNo` | TEXT | House/building number | NOT NULL, Max 50 chars |
+| `Street` | TEXT | Street name | NOT NULL, Max 100 chars |
+| `Barangay` | TEXT | Barangay location | NOT NULL, Max 50 chars |
+| `Password` | TEXT | Hashed password | NOT NULL, Max 255 chars |
+| `Role` | TEXT | User role | NOT NULL, Default: 'Customer' |
+| `CreatedAt` | DATETIME | Account creation timestamp | NOT NULL, DEFAULT CURRENT_TIMESTAMP |
+
+#### **Orders Table**
+Records all customer orders and their status.
+
+```sql
+CREATE TABLE Orders (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Username TEXT,
+    CustomerName TEXT NOT NULL,
+    HouseNo TEXT NOT NULL,
+    Street TEXT NOT NULL,
+    Barangay TEXT NOT NULL,
+    City TEXT DEFAULT 'Navotas City',
+    UseSavedAddress INTEGER NOT NULL,
+    HasGallon INTEGER NOT NULL,
+    PurchaseGallon INTEGER NOT NULL,
+    RefillGallon INTEGER NOT NULL,
+    Type TEXT NOT NULL,
+    Quantity INTEGER NOT NULL,
+    PaymentMethod TEXT NOT NULL,
+    TotalPrice REAL NOT NULL,
+    Status TEXT DEFAULT 'Pending',
+    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+| Column | Type | Description | Constraints |
+|--------|------|-------------|-------------|
+| `Id` | INTEGER | Unique order identifier | PRIMARY KEY, AUTO INCREMENT |
+| `Username` | TEXT | Associated customer | Max 50 chars |
+| `CustomerName` | TEXT | Name on the order | NOT NULL, Max 100 chars |
+| `HouseNo` | TEXT | Delivery house number | NOT NULL, Max 50 chars |
+| `Street` | TEXT | Delivery street | NOT NULL, Max 100 chars |
+| `Barangay` | TEXT | Delivery barangay | NOT NULL, Max 50 chars |
+| `City` | TEXT | Delivery city | Default: 'Navotas City' |
+| `UseSavedAddress` | INTEGER | Boolean flag (0/1) | NOT NULL |
+| `HasGallon` | INTEGER | Does customer have gallon? (0/1) | NOT NULL |
+| `PurchaseGallon` | INTEGER | Purchasing gallon? (0/1) | NOT NULL |
+| `RefillGallon` | INTEGER | Refilling gallon? (0/1) | NOT NULL |
+| `Type` | TEXT | Gallon type (Slim/Round) | NOT NULL, Max 10 chars |
+| `Quantity` | INTEGER | Quantity ordered | NOT NULL, Range: 1-1000 |
+| `PaymentMethod` | TEXT | Payment method (Cash/E-Wallet) | NOT NULL, Max 20 chars |
+| `TotalPrice` | REAL | Order total amount | NOT NULL |
+| `Status` | TEXT | Order fulfillment status | Default: 'Pending' |
+| `CreatedAt` | DATETIME | Order creation timestamp | NOT NULL, DEFAULT CURRENT_TIMESTAMP |
+
+#### **Feedbacks Table**
+Customer feedback and admin responses.
+
+```sql
+CREATE TABLE Feedbacks (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Username TEXT,
+    Message TEXT NOT NULL,
+    Rating INTEGER NOT NULL,
+    IsAnonymous INTEGER NOT NULL,
+    AdminReply TEXT,
+    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+| Column | Type | Description | Constraints |
+|--------|------|-------------|-------------|
+| `Id` | INTEGER | Unique feedback identifier | PRIMARY KEY, AUTO INCREMENT |
+| `Username` | TEXT | Customer who submitted feedback | Max 50 chars |
+| `Message` | TEXT | Feedback message | NOT NULL |
+| `Rating` | INTEGER | Rating (1-5 stars) | NOT NULL, Range: 1-5 |
+| `IsAnonymous` | INTEGER | Anonymous flag (0/1) | NOT NULL |
+| `AdminReply` | TEXT | Admin's response | Max 1000 chars (nullable) |
+| `CreatedAt` | DATETIME | Submission timestamp | NOT NULL, DEFAULT CURRENT_TIMESTAMP |
+
+---
 
 ## 🏗️ Project Structure
-```
-## 🗂 Project Structure
 
-OOPsie/
-├── Admin/
-│   ├── Components/
-│   │   ├── Layout/                   
-│   │   │   └── MainLayout.razor          # Main layout for admin interface
-│   │   └── Pages/                        # Admin pages
-│   │       ├── Home.razor                # Admin dashboard or overview
-│   │       ├── Order.razor               # Manage customer orders
-│   │       ├── Feedback.razor            # View or manage customer feedback
-│   │       └── AboutUs.razor             # Information about the business
-│   ├── Routes.razor                      # Routing configuration for Admin
-│   └── App.razor                         # Root Admin component
-│
-├── Customer/
-│   ├── Components/
-│   │   ├── Layout/                       
-│   │   │   └── MainLayout.razor          # Layout for customer pages
-│   │   └── Pages/                        # Customer pages
-│   │       ├── Home.razor                # Customer homepage
-│   │       ├── OrderPlace.razor          # Place new order page
-│   │       ├── OrderHistory.razor        # View past orders
-│   │       ├── Feedback.razor            # Submit feedback form
-│   │       └── AboutUs.razor             # About the company page
-│   ├── Routes.razor                      # Routing configuration for Customer
-│   └── App.razor                         # Root Customer component
-│
-├── LoginSignup/
-│   ├── Components/
-│   │   └── Pages/
-│   │       ├── Login.razor               # Login page
-│   │       └── Signup.razor              # Signup page
-│   └── Routes.razor                      # Routing for authentication pages
+```
+test/
+├── Components/
+│   ├── _Imports.razor                  # Global component imports
+│   ├── App.razor                       # Root application component
+│   ├── Routes.razor                    # Application routing configuration
+│   │
+│   ├── Layout/
+│   │   ├── MainLayout.razor            # Default layout for guest/login pages
+│   │   ├── MainLayout.razor.css        # Main layout styles
+│   │   ├── AdminLayout.razor           # Admin portal layout
+│   │   ├── AdminLayout.razor.css       # Admin layout styles
+│   │   ├── CustomerLayout.razor        # Customer portal layout
+│   │   └── CustomerLayout.razor.css    # Customer layout styles
+│   │
+│   └── Pages/
+│       ├── Error.razor                 # Error page (500, etc.)
+│       ├── Login.razor                 # Login page
+│       ├── Signup.razor                # Sign-up/registration page
+│       ├── ForgotPassword.razor        # Password recovery page
+│       ├── ViewDatabase.razor          # Database viewer (dev only)
+│       │
+│       ├── Admin/                      # Admin-only pages (requires admin role)
+│       │   ├── Home.razor              # Admin dashboard
+│       │   ├── Dashboard.razor         # Sales analytics
+│       │   ├── Orders.razor            # Order management
+│       │   ├── Feedback.razor          # Feedback management
+│       │   ├── Account.razor           # Admin account settings
+│       │   └── About.razor             # Business information
+│       │
+│       └── Customer/                   # Customer-only pages (requires customer role)
+│           ├── Home.razor              # Customer home/welcome
+│           ├── PlaceOrder.razor        # New order creation
+│           ├── OrderHistory.razor      # View past orders
+│           ├── Feedback.razor          # Submit & view feedback
+│           ├── Account.razor           # Customer account settings
+│           └── About.razor             # About the business
 │
 ├── Data/
-│   └── Entities/
-│       ├── User.cs                       # User entity model
-│       └── Order.cs                      # Order entity model
-├── AppData/
-│   └── app.db                            # SQLite database file
+│   └── AppDbContext.cs                 # Entity Framework database context
 │
-├── Program.cs                            # Application startup configuration
-└── OOPsie.csproj                         # Project file
+├── Models/
+│   ├── User.cs                         # User entity (Customer/Admin)
+│   ├── Order.cs                        # Order entity
+│   └── Feedback.cs                     # Feedback entity
+│
+├── Services/
+│   └── CurrentUserContext.cs           # Current user state management
+│
+├── Properties/
+│   └── launchSettings.json             # Application launch configuration
+│
+├── wwwroot/
+│   ├── app.css                         # Global styles
+│   ├── images/
+│   │   └── logo.png                    # Application logo
+│   └── ...                             # Static files
+│
+├── Program.cs                          # Application startup configuration
+├── test.csproj                         # Project file
+├── appsettings.json                    # Application settings
+├── appsettings.Development.json        # Development-specific settings
+└── app.db                              # SQLite database file
 ```
 
-## Codes
-### Admin POV
-#### Home
-```C#
-@code {
-    private string quote = string.Empty;
-    private readonly string[] quotes =
-    {
-        "Every drop counts — keep pushing forward!",
-        "Success flows like water — steady and unstoppable.",
-        "Stay consistent, even when progress feels slow.",
-        "Hard work beats talent when talent doesn't work hard.",
-        "Be patient. Great results take time and persistence.",
-        "Each small effort adds up to something big.",
-        "You are not tired, you are just one step away from greatness."
-    };
+---
 
-    protected override void OnInitialized()
-    {
-        var rand = new Random();
-        quote = quotes[rand.Next(quotes.Length)];
-    }
+## 🔧 Core Application Files
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            await JS.InvokeVoidAsync("renderSalesChart");
-        }
-    }
+### **Program.cs**
+Application startup and dependency injection configuration:
+
+```csharp
+// Key configurations:
+- Razor Components and Interactive Server Components
+- SQLite database connection
+- DbContext registration (AppDbContext)
+- User context service (CurrentUserContext)
+- Database initialization and migration
+- Kestrel server configuration
+```
+
+### **AppDbContext.cs** (Data/AppDbContext.cs)
+Entity Framework Core database context:
+
+```csharp
+public class AppDbContext : DbContext
+{
+    public DbSet<User> Users { get; set; }
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<Feedback> Feedbacks { get; set; }
+    
+    // Unique constraints on Username and Email
+    // Address property marked as ignored (computed property)
 }
 ```
-This component selects a random motivational quote and renders the sales chart.
-#### Order
-```C#
-@code {
-    private List<OrderModel> orders = new();
-    private List<OrderModel> filteredOrders = new();
-    private bool showSearchPanel = false;
-    private string searchName = "";
-    private DateTime? searchDate;
-    private string searchPaymentStatus = "";
-    private bool groupByDay = false;
 
-    protected override void OnInitialized()
-    {
-        // Sample data with dates, payment status, amounts, and addresses
-        orders = new List<OrderModel>
-        {
-            new() { Id = "ORD-006", Customer = "Anna Cruz", Address = "123 Main St, Manila", Status = "Pending", 
-                   PaymentStatus = "Pending", Amount = 125.50m,
-                   OrderDate = DateTime.Today.AddHours(10).AddMinutes(30) },
-            new() { Id = "ORD-005", Customer = "Marco Diaz", Address = "456 Oak Ave, Quezon City", Status = "Picked Up", 
-                   PaymentStatus = "Successful", Amount = 89.99m,
-                   OrderDate = DateTime.Today.AddHours(14).AddMinutes(15) },
-            new() { Id = "ORD-004", Customer = "Jessa Flores", Address = "789 Pine St, Makati", Status = "Delivered", 
-                   PaymentStatus = "Successful", Amount = 215.75m,
-                   OrderDate = DateTime.Today.AddDays(-1).AddHours(9).AddMinutes(45) },
-            new() { Id = "ORD-003", Customer = "Carlos Reyes", Address = "321 Elm St, Taguig", Status = "Pending", 
-                   PaymentStatus = "Failed", Amount = 45.25m,
-                   OrderDate = DateTime.Today.AddDays(-1).AddHours(16).AddMinutes(20) },
-            new() { Id = "ORD-002", Customer = "Maria Santos", Address = "654 Maple Dr, Pasig", Status = "Picked Up", 
-                   PaymentStatus = "Refunded", Amount = 150.00m,
-                   OrderDate = DateTime.Today.AddHours(11).AddMinutes(0) },
-            new() { Id = "ORD-001", Customer = "John Smith", Address = "987 Cedar Ln, Mandaluyong", Status = "Delivered", 
-                   PaymentStatus = "Successful", Amount = 299.99m,
-                   OrderDate = DateTime.Today.AddDays(-2).AddHours(13).AddMinutes(30) }
-        };
-        
-        filteredOrders = orders;
-    }
+### **Models**
 
-    private void ToggleSearchPanel()
-    {
-        showSearchPanel = !showSearchPanel;
-    }
+#### User.cs
+- Represents a user account (Customer or Admin)
+- Properties: FullName, Username, Email, Password, ContactNumber, Address, Role, CreatedAt
+- Validations: Required fields, string lengths, email format
 
-    private void ApplyFilters()
-    {
-        filteredOrders = orders.Where(order =>
-            (string.IsNullOrEmpty(searchName) || 
-             order.Customer.Contains(searchName, StringComparison.OrdinalIgnoreCase)) &&
-            (!searchDate.HasValue || 
-             order.OrderDate.Date == searchDate.Value.Date) &&
-            (string.IsNullOrEmpty(searchPaymentStatus) || 
-             order.PaymentStatus == searchPaymentStatus)
-        ).ToList();
-        
-        StateHasChanged(); // Refresh UI after filtering
-    }
+#### Order.cs
+- Represents a water refill order
+- Properties: OrderId, Username, CustomerName, DeliveryAddress, GallonType, Quantity, PaymentMethod, Status, TotalPrice, CreatedAt
+- Supports: Purchase gallons, refill gallons, cash/e-wallet payment
 
-    private void ClearFilters()
-    {
-        searchName = "";
-        searchDate = null;
-        searchPaymentStatus = "";
-        groupByDay = false;
-        filteredOrders = orders;
-        StateHasChanged(); // Refresh UI after clearing filters
-    }
+#### Feedback.cs
+- Represents customer feedback
+- Properties: Id, Username, Message, Rating (1-5), IsAnonymous, AdminReply, CreatedAt
+- Tracks: Customer satisfaction and admin responses
 
-    private void OnOrderStatusChange(OrderModel order, ChangeEventArgs e)
-    {
-        order.Status = e.Value?.ToString() ?? "Pending";
-        StateHasChanged(); // Force UI refresh to update colors
-        
-        Console.WriteLine($"Order {order.Id} status changed to: {order.Status}");
-    }
+### **Services**
 
-    private void OnPaymentStatusChange(OrderModel order, ChangeEventArgs e)
-    {
-        order.PaymentStatus = e.Value?.ToString() ?? "Pending";
-        StateHasChanged(); // Force UI refresh to update colors
-        
-        Console.WriteLine($"Order {order.Id} payment status changed to: {order.PaymentStatus}");
-    }
+#### CurrentUserContext.cs
+Simple session management service:
+- Stores current logged-in user information
+- Tracks user role (Customer/Admin)
+- Available throughout the application session
 
-    private string GetOrderStatusClass(string orderStatus)
-    {
-        return orderStatus?.ToLower() switch
-        {
-            "pending" => "order-pending",
-            "picked up" => "order-picked-up",
-            "delivered" => "order-delivered",
-            "cancelled" => "order-cancelled",
-            _ => "order-pending"
-        };
-    }
+---
 
-    private string GetPaymentStatusClass(string paymentStatus)
-    {
-        return paymentStatus?.ToLower() switch
-        {
-            "pending" => "payment-pending",
-            "successful" => "payment-successful",
-            "failed" => "payment-failed",
-            "refunded" => "payment-refunded",
-            _ => "payment-pending"
-        };
-    }
+## 🎨 Layout & Styling
 
-    public class OrderModel
-    {
-        public string Id { get; set; } = string.Empty;
-        public string Customer { get; set; } = string.Empty;
-        public string Address { get; set; } = string.Empty;
-        public string Status { get; set; } = string.Empty;
-        public string PaymentStatus { get; set; } = string.Empty;
-        public decimal Amount { get; set; }  // Use decimal for currency
-        public DateTime OrderDate { get; set; }  // Changed from DateTime? to DateTime
-    }
-}
+### Layout Components
+
+#### **MainLayout.razor**
+Used for login, signup, and public-facing pages.
+
+#### **CustomerLayout.razor**
+Navigation and layout for customer dashboard:
+- Customer-specific sidebar/navigation
+- Links to Home, Place Order, Order History, Feedback, Account, About
+- Logout option
+
+#### **AdminLayout.razor**
+Navigation and layout for admin dashboard:
+- Admin-specific sidebar/navigation
+- Links to Home, Orders, Feedback, Account, About
+- Logout option
+
+### Styling
+- **Global Styles**: `wwwroot/app.css`
+- **Layout-Specific**: `MainLayout.razor.css`, `CustomerLayout.razor.css`, `AdminLayout.razor.css`
+- **Framework**: Bootstrap (via Blazor template)
+
+---
+
+## 🔐 Security Features
+
+### Authentication
+- Username/password-based login
+- Unique username and email validation
+- Password stored as text (in production, use hashing like bcrypt)
+
+### Authorization
+- Role-based access control (Customer vs. Admin)
+- Page-level authorization checks
+- Admin pages only accessible to admin users
+
+### Data Validation
+- Model-level validation via data annotations
+- Client-side validation in forms
+- Server-side validation on submit
+
+### Best Practices
+- Unique constraints on username and email
+- Address validation (house, street, barangay required)
+- Order quantity limits (1-1000)
+- Rating validation (1-5 stars)
+
+---
+
+## 📊 Key Features
+
+### 🛒 **Order Management**
+- Create new orders with customizable gallon options
+- Track order status in real-time
+- View order history
+- Multiple payment methods (Cash, E-Wallet)
+
+### 💬 **Feedback System**
+- Leave reviews with ratings
+- Anonymous feedback option
+- Admin reply capability
+- Real-time feedback updates
+
+### 📦 **Admin Controls**
+- Centralized order management
+- Payment status tracking
+- Customer feedback oversight
+- Sales analytics and reporting
+
+### 👤 **User Accounts**
+- Secure registration process
+- Profile management
+- Address book functionality
+- Role-based access control
+
+### 🌐 **Real-Time Updates**
+- Blazor Server provides live UI updates
+- No page refresh needed
+- Instant feedback from server
+
+---
+
+## 🛠️ Technologies & Dependencies
+
+### Core Framework
+- **ASP.NET Core 8.0**
+- **Blazor Server**
+- **Entity Framework Core 8.0**
+
+### Database
+- **SQLite** (lightweight, file-based)
+
+### Frontend
+- **Razor Components**
+- **HTML5 / CSS3**
+- **Bootstrap** (included in Blazor template)
+
+### Additional Libraries
+- **Microsoft.EntityFrameworkCore.Sqlite**
+- **System.ComponentModel.DataAnnotations** (validation)
+
+---
+
+## 🚨 Troubleshooting
+
+### Port Already in Use Error
+If you see: "Failed to bind to address http://127.0.0.1:5295: address already in use"
+
+**Solution**:
+```bash
+# Option 1: Change the port in launchSettings.json
+# Edit Properties/launchSettings.json and change "https" port to 5296 or 5297
+
+# Option 2: Kill the process using the port
+# Find the process ID (PID) using the port
+netstat -ano | findstr :5295
+
+# Kill the process (replace PID with actual process ID)
+taskkill /PID <PID> /F
+
+# Then run again
+dotnet run
 ```
-This component allows the admin to view the orders made, filter them by date, payment status, or customer name, and update the status of the order and payment.
-#### Order History
-```C#
-@code {
-    private List<OrderModel> orders = new();
 
-    protected override void OnInitialized()
-    {
-        orders = new List<OrderModel>
-        {
-            new() {
-                Id = "ORD-001",
-                Customer = "Anna Cruz",
-                Items = "2x Round Gallons",
-                Total = 240.00m,
-                Status = "Delivered",
-                OutForDelivery = new DateTime(2025, 9, 30, 9, 15, 0),
-            },
-            new() {
-                Id = "ORD-002",
-                Customer = "Marco Diaz",
-                Items = "1x Slim Gallon",
-                Total = 120.00m,
-                Status = "Processing",
-                OutForDelivery = new DateTime(2025, 10, 2, 11, 30, 0),
-            },
-            new() {
-                Id = "ORD-003",
-                Customer = "Jessa Flores",
-                Items = "3x Round Gallons",
-                Total = 360.00m,
-                Status = "Pending"
-            }
-        };
+### Database Issues
+If the database appears corrupted:
 
-        // Auto-calculate delivered time (+1 hour)
-        foreach (var o in orders)
-        {
-            if (o.Status == "Delivered" && o.OutForDelivery.HasValue)
-                o.TimeDelivered = o.OutForDelivery.Value.AddHours(1);
-        }
+```bash
+# Delete the database file
+Remove-Item app.db
 
-        // Sort newest first
-        orders = orders.OrderByDescending(o => o.OutForDelivery ?? o.TimeDelivered ?? DateTime.MinValue).ToList();
-    }
+# Run the application again
+dotnet run
 
-    private string GetStatusClass(string status) => status switch
-    {
-        "Delivered" => "status-delivered",
-        "Processing" => "status-processing",
-        "Pending" => "status-pending",
-        _ => ""
-    };
-
-    public class OrderModel
-    {
-        public string Id { get; set; } = "";
-        public string Customer { get; set; } = "";
-        public string Items { get; set; } = "";
-        public decimal Total { get; set; }
-        public string Status { get; set; } = "";
-        public DateTime? OutForDelivery { get; set; }
-        public DateTime? TimeDelivered { get; set; }
-    }
-}
+# This will recreate the database with proper schema
 ```
-This Component allows the admin to see the history of orders made by customers.
-#### Feedback
-```C#
-@code {
-    private int selectedStar = 0;
 
-    private class Review
-    {
-        public string Author { get; set; } = "";
-        public string Comment { get; set; } = "";
-        public int Star { get; set; }
-    }
+### Login Issues
+- Ensure you created an account via the **Sign-Up** page
+- Check that your **username** and **password** match exactly (case-sensitive)
+- Verify you selected the correct role (**Customer** or **Admin**)
 
-    private List<Review> allReviews = new()
-    {
-        new Review { Author = "Anna", Comment = "Amazing water delivery! Always on time!", Star = 5 },
-        new Review { Author = "Mark", Comment = "Fantastic service and clean water!", Star = 5 },
-        new Review { Author = "Ella", Comment = "Very good experience!", Star = 4 },
-        new Review { Author = "Tom", Comment = "Delivery was okay, packaging could improve.", Star = 3 },
-        new Review { Author = "Cathy", Comment = "Not bad but delivery was a bit late.", Star = 3 },
-        new Review { Author = "Rico", Comment = "The bottle was slightly damaged.", Star = 2 },
-        new Review { Author = "Marie", Comment = "Terrible experience, never again.", Star = 1 },
-    };
+### Order Placement Issues
+- Ensure all required fields are filled
+- Check that quantity is between 1 and 1000
+- Verify delivery address is complete
+- Confirm payment method is selected
 
-    private List<Review> filteredReviews = new();
+---
 
-    private string newComment = "";
-    private int newStar = 0;
-    private bool isAnonymous = false;
+## 📚 Learning Objectives
 
-    protected override void OnInitialized()
-    {
-        filteredReviews = new(allReviews);
-    }
+This project is designed to teach:
 
-    private void FilterReviews(int star)
-    {
-        selectedStar = star;
+1. **Web Development**:
+   - Building interactive web applications with Blazor
+   - Real-time updates without page refresh
+   - Server-side rendering with .NET
 
-        if (star == 0)
-            filteredReviews = new(allReviews);
-        else
-            filteredReviews = allReviews.Where(r => r.Star == star).ToList();
+2. **Object-Oriented Programming**:
+   - Entity models (User, Order, Feedback classes)
+   - Encapsulation and abstraction
+   - Inheritance and polymorphism
 
-        StateHasChanged();
-    }
+3. **Database Design**:
+   - Relational database structure
+   - Entity relationships
+   - Data integrity and constraints
+   - ACID principles
 
-    private void SubmitFeedback()
-    {
-        if (!string.IsNullOrWhiteSpace(newComment))
-        {
-            string author = isAnonymous ? "Anonymous" : "Username";
-            allReviews.Add(new Review { Author = author, Comment = newComment, Star = newStar });
-            newComment = "";
-            newStar = 0;
-            isAnonymous = false;
-            FilterReviews(selectedStar);
-        }
-    }
-}
+4. **Back-End Development**:
+   - Entity Framework Core ORM
+   - CRUD operations (Create, Read, Update, Delete)
+   - Repository pattern (if implemented)
+   - Dependency injection
+
+5. **Software Engineering**:
+   - Project structure and organization
+   - Code reusability
+   - Error handling and logging
+   - User experience design
+   - Security best practices
+
+---
+
+## 🎓 Best Practices Demonstrated
+
+- ✅ Separation of concerns (Models, Data, Services, Components)
+- ✅ DI (Dependency Injection) container
+- ✅ Model validation using data annotations
+- ✅ Role-based authorization
+- ✅ Error handling with try-catch blocks
+- ✅ User-friendly error messages
+- ✅ Real-time UI updates
+- ✅ Clean, readable code structure
+
+---
+
+## 📝 Development Notes
+
+### Adding New Features
+1. Create entity model in `Models/` folder
+2. Add DbSet to `AppDbContext.cs`
+3. Create Razor component in `Components/Pages/`
+4. Update routes in `Routes.razor`
+5. Test thoroughly before deployment
+
+### Database Migrations (When Needed)
+```bash
+# Create migration
+dotnet ef migrations add MigrationName
+
+# Apply migration
+dotnet ef database update
 ```
-This component allows the admin the view the reviews of customers.
 
-### Customer POV
-#### Home
-```C#
-@code {
-    [Inject] private NavigationManager Navigation { get; set; } = default!;
+### Debugging
+- Use Visual Studio Code debugger with C# extension
+- Set breakpoints and step through code
+- Check browser console for client-side errors
+- Review application logs for server errors
 
-    // Navigation methods kept in case you need them for other purposes
-    private void NavigateToOrder()
-    {
-        Navigation.NavigateTo("/order");
-    }
+---
 
-    private void NavigateToAppointment()
-    {
-        Navigation.NavigateTo("/appointment");
-        }
-    }
+## 🚀 Deployment
+
+### Build for Production
+```bash
+dotnet build --configuration Release
 ```
-This component simply allows the customer to navigate to the order and appointment pages.
-#### Order Placement
-```C#
-@code {
-    private bool hasGallon = true;
-    private bool purchaseGallon = false;
-    private int purchaseQuantity;
-    private string? purchaseType;
-    private string? customerName;
-    private string? refillType;
-    private int refillQuantity;
-    private string? paymentMethod;
-    private bool orderPlaced = false;
 
-    private int purchaseTotal => (purchaseType switch
-    {
-        "slim" => 200,
-        "round" => 250,
-        _ => 0
-    }) * purchaseQuantity;
-
-    private int refillTotal => (refillType switch
-    {
-        "slim" => 25,
-        "round" => 30,
-        _ => 0
-    }) * refillQuantity;
-
-    private void PlaceOrder()
-    {
-        if (string.IsNullOrWhiteSpace(customerName) || string.IsNullOrWhiteSpace(paymentMethod))
-            return;
-
-        orderPlaced = true;
-    }
-}
+### Publish Application
+```bash
+dotnet publish --configuration Release --output ./publish
 ```
-This component allows the customer to fill out an ordering form where it needs if the customer has a gallon, wants to purchase one, wants how many gallons, the type of gallon (either round or slim), the customer's name, the refill type, how many refills, and the payment method of choice.
-#### Feedback
-```C#
-@code {
-    private int selectedStar = 0;
 
-    private class Review
-    {
-        public string Author { get; set; } = "";
-        public string Comment { get; set; } = "";
-        public int Star { get; set; }
-    }
-
-    private List<Review> allReviews = new()
-    {
-        new Review { Author = "Anna", Comment = "Amazing water delivery! Always on time!", Star = 5 },
-        new Review { Author = "Mark", Comment = "Fantastic service and clean water!", Star = 5 },
-        new Review { Author = "Ella", Comment = "Very good experience!", Star = 4 },
-        new Review { Author = "Tom", Comment = "Delivery was okay, packaging could improve.", Star = 3 },
-        new Review { Author = "Cathy", Comment = "Not bad but delivery was a bit late.", Star = 3 },
-        new Review { Author = "Rico", Comment = "The bottle was slightly damaged.", Star = 2 },
-        new Review { Author = "Marie", Comment = "Terrible experience, never again.", Star = 1 },
-    };
-
-    private List<Review> filteredReviews = new();
-
-    private string newComment = "";
-    private int newStar = 0;
-    private bool isAnonymous = false;
-
-    protected override void OnInitialized()
-    {
-        filteredReviews = new(allReviews);
-    }
-
-    private void FilterReviews(int star)
-    {
-        selectedStar = star;
-
-        if (star == 0)
-            filteredReviews = new(allReviews);
-        else
-            filteredReviews = allReviews.Where(r => r.Star == star).ToList();
-
-        StateHasChanged();
-    }
-
-    private void SubmitFeedback()
-    {
-        if (!string.IsNullOrWhiteSpace(newComment))
-        {
-            string author = isAnonymous ? "Anonymous" : "Username";
-            allReviews.Add(new Review { Author = author, Comment = newComment, Star = newStar });
-            newComment = "";
-            newStar = 0;
-            isAnonymous = false;
-            FilterReviews(selectedStar);
-        }
-    }
-}
+### Run Published Version
+```bash
+cd publish
+dotnet test.dll
 ```
-This component allows the customer to view other customer's reviews, filter the reviews by how many stars, and create a review.
-#### Order History
-```C#
-@code {
-    private string UserRole = "Admin"; // "Admin" or "Customer"
-    private string CurrentUser = "Aljiemer Ting"; // Example logged-in name Anna Cruz
-    private List<OrderModel> orders = new();
 
-    protected override void OnInitialized()
-    {
-        var allOrders = new List<OrderModel>
-        {
-            new() {
-                Id = "ORD-001",
-                Customer = "Anna Cruz",
-                GallonType = "Round Gallon",
-                Quantity = 2,
-                Total = 240.00m,
-                Status = "Delivered",
-                OutForDelivery = new DateTime(2025, 9, 30, 9, 15, 0),
-            },
-            new() {
-                Id = "ORD-002",
-                Customer = "Marco Diaz",
-                GallonType = "Slim Gallon",
-                Quantity = 1,
-                Total = 120.00m,
-                Status = "Processing",
-                OutForDelivery = new DateTime(2025, 10, 2, 11, 30, 0),
-            },
-            new() {
-                Id = "ORD-003",
-                Customer = "Jessa Flores",
-                GallonType = "Round Gallon",
-                Quantity = 3,
-                Total = 360.00m,
-                Status = "Pending"
-            }
-        };
+---
 
-        // Filter: customers only see their own orders
-        if (UserRole == "Customer")
-            orders = allOrders.Where(o => o.Customer == CurrentUser).ToList();
-        else
-            orders = allOrders;
+## 📞 Support & Resources
 
-        // Auto-calculate delivered time (+1 hour)
-        foreach (var o in orders)
-        {
-            if (o.Status == "Delivered" && o.OutForDelivery.HasValue)
-                o.TimeDelivered = o.OutForDelivery.Value.AddHours(1);
-        }
+### Documentation
+- [ASP.NET Core Documentation](https://docs.microsoft.com/aspnet/core)
+- [Blazor Server Documentation](https://docs.microsoft.com/aspnet/core/blazor)
+- [Entity Framework Core](https://docs.microsoft.com/ef/core)
+- [SQLite Documentation](https://www.sqlite.org/docs.html)
 
-        // Sort newest first
-        orders = orders.OrderByDescending(o => o.OutForDelivery ?? o.TimeDelivered ?? DateTime.MinValue).ToList();
-    }
+### Common Issues
+- Check the **Troubleshooting** section above
+- Review application logs
+- Verify all prerequisites are installed
+- Ensure .NET SDK 8.0 or higher is installed
 
-    private string GetStatusClass(string status) => status switch
-    {
-        "Delivered" => "status-delivered",
-        "Processing" => "status-processing",
-        "Pending" => "status-pending",
-        _ => ""
-    };
+---
 
-    public class OrderModel
-    {
-        public string Id { get; set; } = "";
-        public string Customer { get; set; } = "";
-        public string GallonType { get; set; } = "";
-        public int Quantity { get; set; }
-        public decimal Total { get; set; }
-        public string Status { get; set; } = "";
-        public DateTime? OutForDelivery { get; set; }
-        public DateTime? TimeDelivered { get; set; }
-    }
-}
-```
-This component allows to see the customer's orders if the user is an admin and only their own orders if the user is a customer. It also sorts the orders by newest first.
+## 📄 License
 
-### Login/Signup Pages
-#### Login Page
-```C#
-@code {
-    private string SelectedRole { get; set; } = "Customer";
-    private string Username { get; set; } = "";
-    private string Password { get; set; } = "";
+This project is for educational purposes. Use and modify as needed for learning.
 
-    private void HandleLogin()
-    {
-        // TODO: Implement login logic
-        Console.WriteLine($"Login attempt: {SelectedRole}, {Username}");
-        // Navigation.NavigateTo("/dashboard");
-    }
+---
 
-    private void HandleForgotPassword()
-    {
-        // TODO: Implement forgot password logic
-        Console.WriteLine("Forgot password clicked");
-        // Navigation.NavigateTo("/forgot-password");
-    }
-}
-```
-This component handles the login form.
-#### Signup Page
-```C#
-@code {
-    private string FullName { get; set; } = "";
-    private string Username { get; set; } = "";
-    private string Email { get; set; } = "";
-    private string ContactNumber { get; set; } = "";
-    private string Address { get; set; } = "";
-    private string Password { get; set; } = "";
-    private string ConfirmPassword { get; set; } = "";
-    private bool AgreeTerms { get; set; } = false;
+## ✨ Future Enhancements
 
-    private void HandleSignup()
-    {
-        if (!AgreeTerms)
-        {
-            // Show error - must agree to terms
-            Console.WriteLine("Please agree to the Terms and Conditions");
-            return;
-        }
+Potential features to add:
+- 🔒 Password hashing with bcrypt
+- 📧 Email notifications for orders
+- 🗳️ Advanced filtering and reporting
+- 💳 Integrated payment gateway (PayMaya, GCash)
+- 📱 Mobile-responsive design improvements
+- 🔔 Real-time notifications
+- 📊 Advanced analytics dashboard
+- 🌐 Multi-language support
+- 🗺️ Map integration for delivery tracking
+- 🤖 AI-powered recommendations
 
-        if (Password != ConfirmPassword)
-        {
-            // Show error - passwords don't match
-            Console.WriteLine("Passwords do not match");
-            return;
-        }
+---
 
-        // TODO: Implement signup logic
-        Console.WriteLine($"Signup attempt: {FullName}, {Username}");
-        // Navigation.NavigateTo("/login");
-    }
+## 🤝 Contributing
 
-    private void ShowTerms()
-    {
-        // TODO: Show terms and conditions modal or navigate to terms page
-        Console.WriteLine("Show Terms and Conditions");
-        // Navigation.NavigateTo("/terms");
-    }
-}
-```
-This component allows a potential customer to create an account for this service. It requires the user's details and shows errors if the user's entered passwords don't match or does not agree to the terms and conditions.
+Feel free to fork, modify, and improve this project for educational purposes!
+
+---
+
+## 📅 Project Information
+
+- **Framework**: ASP.NET Core 8.0 Blazor Server
+- **Database**: SQLite
+- **Language**: C# with Razor
+- **Purpose**: Educational - Learning C# web development
+
+---
+
+<p align="center">
+  <strong>Thank you for using WSOA!</strong><br>
+  Built with ❤️ for learning and development
+</p>
+
+---
 ## 🚨 Important Links
 1. Figma - [Figma](https://www.figma.com/design/qDKawO6WHZ6pZayIyJRWcE/Wireframing-WSOA?node-id=0-1&t=2q8IbWdNnUfIcZg5-1)
-2. UML - [Relative Link](/UML.puml) OR [Google Drive](https://drive.google.com/file/d/1J8QeOCYmqnLIjpQS3NhUWjs6BF_PW3Lr/view?usp=sharing)
-3. Logo - [Google Drive](https://drive.google.com/file/d/1Zp4fHttLC4M-Rqi34LmliEfKzrQ4-Np3/view)
+2. UML - [Relative Link](/test/UML.puml) OR [Image](/test/wwwroot/images/UML.png)
+3. Logo - [Google Drive](/test/wwwroot/images/logo.png)
+---
+
+**Last Updated**: November 2025  
+**Version**: 1.0.0
