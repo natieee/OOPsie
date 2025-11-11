@@ -1,7 +1,13 @@
-﻿@page "/"
-@page "/login"
+﻿@page "/LoginSignup/Login"
+@page "/" 
 @inject NavigationManager Navigation
-@layout main.Components.LSLayout.EmptyLayout
+@inject AuthService AuthService
+@inject AuthenticationStateProvider AuthStateProvider
+@using main.Data
+@inject CustomAuthStateProvider CustomAuthStateProvider
+
+
+@rendermode InteractiveServer
 
 <style>
     * {
@@ -235,7 +241,6 @@
 </style>
 
 <div class="login-container">
-    <!-- Left Brand Section -->
     <div class="brand-section">
         <div class="brand-content">
             <div class="brand-title">
@@ -249,10 +254,9 @@
         </div>
     </div>
 
-    <!-- Right Form Section -->
     <div class="form-section">
         <div class="form-header">
-            <h2 class="form-title">Login</h2>
+             <h2 class="form-title">Login</h2>
             <div class="form-subtitle">Access your account</div>
         </div>
         
@@ -272,6 +276,13 @@
     font-size: 0.9rem;
     }
     </style>
+
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="alert alert-danger" role="alert">
+                @errorMessage
+            </div>
+        }
 
         <div class="form-group">
             <label class="form-label">Log in as</label>
@@ -294,9 +305,12 @@
         <div class="forgot-password">
             <a href="#" @onclick="HandleForgotPassword">Forgot password?</a>
         </div>
+        
         <button class="login-btn" @onclick="HandleLogin">Login</button>
+        
         <div class="switch-link">
-            Don't have an account? <a href="/signup">Create account</a>
+            Don't have an account?
+            <a href="/LoginSignup/Signup">Create account</a>
         </div>
     </div>
 </div>
@@ -305,26 +319,48 @@
     private string SelectedRole { get; set; } = "Customer";
     private string Username { get; set; } = "";
     private string Password { get; set; } = "";
+    private string? errorMessage; // For displaying errors
 
-    private void HandleLogin()
+    private async Task HandleLogin()
     {
-        // TODO: Implement login logic
-        Console.WriteLine($"Login attempt: {SelectedRole}, {Username}");
-        // Navigation.NavigateTo("/dashboard");
-        if (SelectedRole == "Admin")
+        errorMessage = null; // Clear old errors
+        
+        // 1. Call the AuthService to check credentials
+        var user = await AuthService.LoginAsync(Username, Password);
+
+        if (user == null)
         {
-            Navigation.NavigateTo("/admin/home");
+            errorMessage = "Invalid username or password.";
+            return;
+        }
+
+        // 2. Check if the role they selected matches their actual role
+        if (user.Role != SelectedRole)
+        {
+            errorMessage = $"Login failed. Please select the correct role. Are you a {user.Role}?";
+            return;
+        }
+
+        // 3. Mark the user as authenticated in the app
+        CustomAuthStateProvider.MarkUserAsAuthenticated(user.Username, user.Role);
+      
+        // 4. Redirect based on their role
+
+        if (user.Role == "Admin")
+        {
+            Navigation.NavigateTo("/admin/home", forceLoad: true);
         }
         else
         {
-            Navigation.NavigateTo("/customer/home");
+            Navigation.NavigateTo("/customer/home", forceLoad: true);
         }
+        // ...existing code...
     }
 
     private void HandleForgotPassword()
     {
         // TODO: Implement forgot password logic
         Console.WriteLine("Forgot password clicked");
-        // Navigation.NavigateTo("/forgot-password");
+        errorMessage = "Forgot password feature is not yet implemented.";
     }
 }

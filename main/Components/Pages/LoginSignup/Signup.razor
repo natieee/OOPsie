@@ -1,11 +1,9 @@
-@page "/signup"
+@page "/LoginSignup/Signup"
 @inject NavigationManager Navigation
-@rendermode InteractiveServer
-@using main.Data
+@inject AuthService AuthService
 @using main.Data.Entities
-@using Microsoft.AspNetCore.Identity
-@using Microsoft.EntityFrameworkCore
-@using Microsoft.AspNetCore.Components.Web
+
+@rendermode InteractiveServer
 
 <style>
     * {
@@ -403,24 +401,12 @@
 </style>
 
 <div class="signup-container">
-    <!-- Left Brand Section -->
     <div class="brand-section">
-        <div class="water-drop water-drop-1"></div>
-        <div class="water-drop water-drop-2"></div>
-        <div class="water-drop water-drop-3"></div>
         <div class="brand-content">
-            <div class="brand-logo">
-                <img src=https://i.postimg.cc/tJjFPpFj/566713130-2648065195543491-8938382609362833392-n.png alt="Water Station Online Appointment Logo" width="240" height="240" />
-            </div>
-            <div class="brand-title">
-                Water Station<br />
-                Online Appointment
-            </div>
             <div class="brand-subtitle">DRINK YOUR WATER BITCH!</div>
         </div>
     </div>
 
-    <!-- Right Form Section -->
     <div class="form-section">
         <div class="form-header">
             <h2 class="form-title">Sign up</h2>
@@ -429,47 +415,43 @@
 
         <div class="form-content">
         
-            <!-- Row 1: Fullname -->
             <div class="form-group full-width">
                 <label class="form-label">Full Name</label>
-                <input class="form-input" type="text" @bind="FullName" placeholder="Enter your Full Name" />
+                <input class="form-input" type="text" @bind="newUser.FullName" placeholder="Enter your Full Name" />
             </div>
 
-            <!-- Row 2: Username and Email -->
             <div class="form-row">
-                <div class="form-group">
+                 <div class="form-group">
                     <label class="form-label">Username</label>
-                    <input class="form-input" type="text" @bind="Username" placeholder="Choose username" />
+                    <input class="form-input" type="text" @bind="newUser.Username" placeholder="Choose username" />
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Email</label>
-                    <input class="form-input" type="email" @bind="Email" placeholder="Enter email" />
+                     <label class="form-label">Email</label>
+                    <input class="form-input" type="email" @bind="newUser.Email" placeholder="Enter email" />
                 </div>
             </div>
 
-            <!-- Row 3: Contact and Address -->
             <div class="form-row">
-                <div class="form-group">
+                 <div class="form-group">
                     <label class="form-label">Contact number</label>
-                    <input class="form-input" type="tel" @bind="ContactNumber" placeholder="Phone number" />
+                    <input class="form-input" type="tel" @bind="newUser.ContactNumber" placeholder="Phone number" />
                 </div>
             </div>
 
             <div class="form-group full-width">
-                <label class="form-label">Address</label>
-                <textarea class="form-textarea" @bind="Address" placeholder="House no. / Street name / Brgy name / City"></textarea>
+                 <label class="form-label">Address</label>
+                <textarea class="form-textarea" @bind="newUser.Address" placeholder="House no. / Street name / Brgy name / City"></textarea>
             </div>
 
-            <!-- Row 4: Password and Confirm Password -->
             <div class="form-row">
                 <div class="form-group">
                     <label class="form-label">Password</label>
-                    <input class="form-input" type="password" @bind="Password" placeholder="Create password" />
+                     <input class="form-input" type="password" @bind="Password" placeholder="Create password" />
                 </div>
                 <div class="form-group">
                     <label class="form-label">Confirm password</label>
                     <input class="form-input" type="password" @bind="ConfirmPassword" placeholder="Confirm password" />
-                </div>
+                 </div>
             </div>
 
             <div class="checkbox-group">
@@ -486,10 +468,18 @@
                         @errorMessage
                     </div>
                 }
-                <button type="button" class="signup-btn" @onclick="HandleSignup">Create account</button>
+                @if (!string.IsNullOrEmpty(successMessage))
+                {
+                    <div class="alert alert-success" role="alert">
+                        @successMessage
+                    </div>
+                }
+                
+                <button type="button" class="signup-btn" @onclick="HandleSignup" disabled="@(!string.IsNullOrEmpty(successMessage))">Create account</button>
 
                 <div class="switch-link">
-                    Already have an account? <a href="/login">Log in</a>
+                     Already have an account?
+                     <a href="/LoginSignup/Login">Log in</a>
                 </div>
             </div>
         </div>
@@ -497,30 +487,23 @@
 </div>
 
 @code {
-    // Injected Services
-    [Inject] private AppDbContext _context { get; set; } = default!;
-    [Inject] private IPasswordHasher<User> _passwordHasher { get; set; } = default!;
-    [Inject] private NavigationManager _navigationManager { get; set; } = default!;
-
     // Form fields
-    private string FullName { get; set; } = "";
-    private string Username { get; set; } = "";
-    private string Email { get; set; } = "";
-    private string ContactNumber { get; set; } = "";
-    private string Address { get; set; } = "";
+    private User newUser = new User();
     private string Password { get; set; } = "";
     private string ConfirmPassword { get; set; } = "";
     private bool AgreeTerms { get; set; } = false;
 
-    // To display errors to the user
-    private string errorMessage = "";
+    // To display messages
+    private string? errorMessage;
+    private string? successMessage;
 
     private async Task HandleSignup()
     {
-        errorMessage = ""; // Clear any previous errors
+        errorMessage = null;
+        successMessage = null;
 
         // 1. Basic form validation
-        if (Password != ConfirmPassword)
+        if (string.IsNullOrWhiteSpace(Password) || Password != ConfirmPassword)
         {
             errorMessage = "Passwords do not match.";
             return;
@@ -532,48 +515,19 @@
             return;
         }
 
-        // 2. Check if user already exists
-        if (await _context.Users.AnyAsync(u => u.Username == Username))
+        // 2. Call the AuthService to register the user
+        var success = await AuthService.RegisterUserAsync(newUser, Password);
+
+        // 3. Handle the response
+        if (success)
         {
-            errorMessage = "Username is already taken.";
-            return;
+            successMessage = "Registration successful! Redirecting to login...";
+            await Task.Delay(2000); // Wait 2 seconds
+            Navigation.NavigateTo("/LoginSignup/Login");
         }
-
-        if (await _context.Users.AnyAsync(u => u.Email == Email))
+        else
         {
-            errorMessage = "Email is already in use.";
-            return;
-        }
-
-        // 3. Create the new user object
-        var newUser = new User
-        {
-            FullName = FullName,
-            Username = Username,
-            Email = Email,
-            ContactNumber = ContactNumber,
-            Address = Address,
-            Role = "Customer", // All signups are Customers by default
-            DateCreated = DateTime.Now
-        };
-
-        // 4. Hash the password
-        newUser.PasswordHash = _passwordHasher.HashPassword(newUser, Password);
-
-        // 5. Save to database
-        try
-        {
-            _context.Users.Add(newUser);
-            await _context.SaveChangesAsync();
-
-            // 6. Redirect to login page on success
-            _navigationManager.NavigateTo("/login");
-        }
-        catch (Exception ex)
-        {
-            // Log the error (in a real app) and show a generic message
-            errorMessage = "An error occurred while creating your account. Please try again.";
-            Console.WriteLine(ex.Message); // For debugging
+            errorMessage = "Registration failed. That username or email may already be taken.";
         }
     }
 
@@ -581,5 +535,6 @@
     {
         // TODO: Show terms and conditions modal or navigate to terms page
         Console.WriteLine("Show Terms and Conditions");
+        errorMessage = "Terms and conditions are not yet implemented.";
     }
 }

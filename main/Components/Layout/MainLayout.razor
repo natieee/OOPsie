@@ -1,41 +1,76 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthStateProvider
+@using main.Data 
+@inject CustomAuthStateProvider CustomAuthStateProvider
+
 
 <div class="dashboard-layout">
-    <aside class="sidebar">
-        <!-- Logo Section -->
-        <div class="logo-container">
-            <img src="https://scontent.fmnl4-4.fna.fbcdn.net/v/t1.15752-9/566713130_2648065195543491_8938382609362833392_n.png?_nc_cat=100&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeFUiCIjWMUSw-gKfF6tjPKUkUG4gshH3USRQbiCyEfdRFdWk4ScUaH6hjI-jxb6uPRn_InGNe7i8yIIsJnBVyFn&_nc_ohc=CKYQ4QnERwQQ7kNvwGJK-IK&_nc_oc=AdlYVTS0aHqpNYUpaTIZUQ68QdSI8r0irbvO-DCNnqQe7vH7hyRFVfKFyxvHGZ6zNXpB7gD3gpFGJtTzOcBzJHSv&_nc_zt=23&_nc_ht=scontent.fmnl4-4.fna&oh=03_Q7cD3gFLk8RRB9l3JItR-JGp_jhpG_6LzG_jAWmA6FUJ4kfMUg&oe=69281802" 
-                 alt="Water Station Logo" 
-                 class="logo-image" />
-            <h1 class="system-name">Water Station Online Appointment</h1>
-        </div>
+
+    <AuthorizeView>
         
-        <h2 style="text-align: center;">Customer</h2>
-        <nav>
-            <a href="/customer/home" class="nav-link @(IsActive("/customer/home") ? "active" : "")">
-                <i class="fas fa-home"></i> Home
-            </a>
-            <a href="/customer/place-order" class="nav-link @(IsActive("/customer/place-order") ? "active" : "")">
-                <i class="fas fa-box"></i> Place Order
-            </a>
-            <a href="/customer/order-history" class="nav-link @(IsActive("/customer/order-history") ? "active" : "")">
-                <i class="fas fa-history"></i> Order History
-            </a>
-            <a href="/customer/feedback" class="nav-link @(IsActive("/customer/feedback") ? "active" : "")">
-                <i class="fas fa-star"></i> Feedback
-            </a>
-            <a href="/customer/About" class="nav-link @(IsActive("/customer/About") ? "active" : "")">
-                <i class="fas fa-info-circle"></i> About Us
-            </a>
-        </nav>
+        <Authorized>
+            <aside class="sidebar">
+                <h2 style="text-align: center;">Welcome, @context.User.Identity?.Name</h2>
+                <div class="logo-container">
+                    <img src="https://scontent.fmnl4-4.fna.fbcdn.net/v/t1.15752-9/566713130_2648065195543491_8938382609362833392_n.png?_nc_cat=100&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeFUiCIjWMUSw-gKfF6tjPKUkUG4gshH3USRQbiCyEfdRFdWk4ScUaH6hjI-jxb6uPRn_InGNe7i8yIIsJnBVyFn&_nc_ohc=CKYQ4QnERwQQ7kNvwGJK-IK&_nc_oc=AdlYVTS0aHqpNYUpaTIZUQ68QdSI8r0irbvO-DCNnqQe7vH7hyRFVfKFyxvHGZ6zNXpB7gD3gpFGJtTzOcBzJHSv&_nc_zt=23&_nc_ht=scontent.fmnl4-4.fna&oh=03_Q7cD3gFLk8RRB9l3JItR-JGp_jhpG_6LzG_jAWmA6FUJ4kfMUg&oe=69281802"
+                         alt="Water Station Logo"
+                         class="logo-image" />
+                    <h1 class="system-name">Water Station Online Appointment</h1>
+                </div>
+
+                
+                
+                <nav>
+                    <a href="/customer/home" class="nav-link @(IsActive("/customer/home") ? "active" : "")">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                    <a href="/customer/place-order" class="nav-link @(IsActive("/customer/place-order") ? "active" : "")">
+                        <i class="fas fa-box"></i> Place Order
+                    </a>
+                    <a href="/customer/order-history" class="nav-link @(IsActive("/customer/order-history") ? "active" : "")">
+                        <i class="fas fa-history"></i> Order History
+                    </a>
+                    <a href="/customer/feedback" class="nav-link @(IsActive("/customer/feedback") ? "active" : "")">
+                        <i class="fas fa-star"></i> Feedback
+                    </a>
+                    <a href="/customer/About" class="nav-link @(IsActive("/customer/About") ? "active" : "")">
+                        <i class="fas fa-info-circle"></i> About Us
+                    </a>
+                </nav>
+
+                <div class="logout-container">
+                    <button class="logout-btn" @onclick="HandleLogout">
+                        <i class="fas fa-sign-out-alt"></i> Log Out
+                    </button>
+                </div>
+            </aside>
+        </Authorized>
         
-        <!-- Logout button positioned at bottom -->
-        <div class="logout-container">
-            <button class="logout-btn">
-                <i class="fas fa-sign-out-alt"></i> Log Out
-            </button>
-        </div>
-    </aside>
+        <NotAuthorized>
+            <aside class="sidebar">
+                 <div class="logo-container">
+                    <img src="https://scontent.fmnl4-4.fna.fbcdn.net/v/t1.15752-9/566713130_2648065195543491_8938382609362833392_n.png?_nc_cat=100&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeFUiCIjWMUSw-gKfF6tjPKUkUG4gshH3USRQbiCyEfdRFdWk4ScUaH6hjI-jxb6uPRn_InGNe7i8yIIsJnBVyFn&_nc_ohc=CKYQ4QnERwQQ7kNvwGJK-IK&_nc_oc=AdlYVTS0aHqpNYUpaTIZUQ68QdSI8r0irbvO-DCNnqQe7vH7hyRFVfKFyxvHGZ6zNXpB7gD3gpFGJtTzOcBzJHSv&_nc_zt=23&_nc_ht=scontent.fmnl4-4.fna&oh=03_Q7cD3gFLk8RRB9l3JItR-JGp_jhpG_6LzG_jAWmA6FUJ4kfMUg&oe=69281802"
+                         alt="Water Station Logo"
+                         class="logo-image" />
+                    <h1 class="system-name">Water Station Online Appointment</h1>
+                </div>
+
+                <h2 style="text-align: center;">Please Login</h2>
+                
+                <nav>
+                    <a href="/LoginSignup/Login" class="nav-link @(IsActive("/LoginSignup/Login") ? "active" : "")">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                    <a href="/LoginSignup/Signup" class="nav-link @(IsActive("/LoginSignup/Signup") ? "active" : "")">
+                        <i class="fas fa-user-plus"></i> Register
+                    </a>
+                </nav>
+            </aside>
+        </NotAuthorized>
+        
+    </AuthorizeView>
+
 
     <main class="main-content">
         <div class="background-overlay"></div>
@@ -48,15 +83,25 @@
 @code {
     private bool IsActive(string href)
     {
-        var uri = NavigationManager.Uri.Replace(NavigationManager.BaseUri, "/");
-        return uri.StartsWith(href, StringComparison.OrdinalIgnoreCase);
+        // Use Uri.LocalPath to correctly handle base paths
+        var uri = new Uri(NavigationManager.Uri);
+        return uri.LocalPath.StartsWith(href, StringComparison.OrdinalIgnoreCase);
     }
 
-    [Inject] private NavigationManager NavigationManager { get; set; } = default!;
+    
+
+    private void HandleLogout()
+    {
+        // Get the custom provider and call the logout method
+        var customAuthProvider = (CustomAuthStateProvider)AuthStateProvider;
+        customAuthProvider.MarkUserAsLoggedOut();
+        
+        // Redirect to login page
+        NavigationManager.NavigateTo("/LoginSignup/Login");
+    }
 }
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-
 <style>
 html, body {
     margin: 0;
